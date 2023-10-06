@@ -19,14 +19,8 @@ func main() {
 	// Defining all the routes
 	r.GET("/", controllers.PingController)
 	r.GET("/pay", nil)
-	r.GET(
-		`/authenticate`,
-		nil,
-	)
-	r.POST(
-		"/addNode",
-		controllers.UpdateController,
-	)
+	r.GET(`/authenticate`, nil)
+	r.POST("/addNode", controllers.UpdateController)
 
 	// Starting the server
 	r.Run(":8080")

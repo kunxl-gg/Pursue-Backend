@@ -31,8 +31,9 @@ func UpdateController(givenctx *gin.Context) {
 		panic(err)
 	}
 
-	result, err := neo4j.ExecuteQuery(ctx, driver, "MERGE (p:Person {name: $name}) RETURN p", map[string]any{
+	result, err := neo4j.ExecuteQuery(ctx, driver, "CREATE (p:Person {name: $name} ) -[:LIKES]->(:Person {name:$simp}) RETURN p", map[string]any{
 		"name": "Kunal Tiwari",
+		"simp": "Siya Bhadra",
 	}, neo4j.EagerResultTransformer,
 		neo4j.ExecuteQueryWithDatabase("neo4j"))
 

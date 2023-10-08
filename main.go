@@ -20,7 +20,8 @@ func main() {
 	r.GET("/", controllers.PingController)
 	r.GET("/pay", nil)
 	r.GET(`/authenticate`, nil)
-	r.POST("/addNode", controllers.UpdateController)
+	r.POST("/addNode", controllers.AddNodeController)
+	r.POST("/updateNode", controllers.UpdateNodeController)
 
 	// Starting the server
 	r.Run(":8080")

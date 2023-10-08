@@ -5,6 +5,8 @@ import (
 	"github.com/neo4j/neo4j-go-driver/v5/neo4j"
 )
 
+
+
 func LoadDB() {
 	ctx := context.Background()
 	dbUri := "neo4j://localhost"

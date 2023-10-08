@@ -2,38 +2,34 @@ package controllers
 
 import (
 	"context"
+	"net/http"
 	"github.com/gin-gonic/gin"
 	"github.com/kunxl-gg/Amrit-Career-Counsellor.git/helpers"
 	"github.com/neo4j/neo4j-go-driver/v5/neo4j"
-	"net/http"
 )
 
-func UpdateController(givenctx *gin.Context) {
+func AddStandAloneNode(givenctx *gin.Context) {
+	// Getting the background Context
+	ctx := context.Background()
+	driver := helpers.MakeConnectionWithDb(ctx)
+	defer driver.Close(ctx)
+
+
+}
+
+func AddNodeController(givenctx *gin.Context) {
 	var requestBody struct {
 		name string
 	}
 
 	givenctx.Bind(&requestBody)
 	ctx := context.Background()
-	dbUri := "neo4j://localhost"
-	dbUser := "neo4j"
-	dbPassword := "secretgraph"
-	driver, err := neo4j.NewDriverWithContext(
-		dbUri,
-		neo4j.BasicAuth(dbUser, dbPassword, ""))
-	if err != nil {
-		panic(err)
-	}
+	driver := helpers.MakeConnectionWithDb(ctx)
 	defer driver.Close(ctx)
 
-	err = driver.VerifyConnectivity(ctx)
-	if err != nil {
-		panic(err)
-	}
-
-	result, err := neo4j.ExecuteQuery(ctx, driver, "CREATE (p:Person {name: $name} ) -[:LIKES]->(:Person {name:$simp}) RETURN p", map[string]any{
-		"name": "Kunal Tiwari",
-		"simp": "Siya Bhadra",
+	_, err := neo4j.ExecuteQuery(ctx, driver, "CREATE (p:Person {name: $name} ) -[:LIKES]->(:Person {name:$simp}) RETURN p", map[string]any{
+		"simp": "Kunal Tiwari",
+		"name": "Jesika Rai",
 	}, neo4j.EagerResultTransformer,
 		neo4j.ExecuteQueryWithDatabase("neo4j"))
 
@@ -42,9 +38,36 @@ func UpdateController(givenctx *gin.Context) {
 	givenctx.JSON(
 		http.StatusOK,
 		gin.H{
-			"message":         result.Summary.Counters().NodesCreated(),
-			"followUpMessage": result.Summary.ResultAvailableAfter(),
 			"answer":          requestBody.name,
 		},
 	)
+}
+
+func UpdateNodeController(givenctx *gin.Context) {
+	
+	// Getting background context
+	ctx := context.Background()
+	driver := helpers.MakeConnectionWithDb(ctx)
+	defer driver.Close(ctx)
+
+	// Making an update
+	_, err := neo4j.ExecuteQuery(
+		ctx, 
+		driver, 
+		"MATCH (p:Person {name: $name}) MERGE (p) -[:LIKES]->(:Person {name:$simp})",
+		map[string]any {
+			"simp": "Dhruv Dighe",
+			"name": "Siya Bhadra",
+		}, neo4j.EagerResultTransformer, neo4j.ExecuteQueryWithDatabase("neo4j"))
+	if err != nil { 
+		panic(err)
+	}
+
+	givenctx.JSON( 
+		http.StatusOK,
+		gin.H{
+			"answer": "Updated",
+		},
+	)
+
 }

@@ -2,19 +2,46 @@ package controllers
 
 import (
 	"context"
-	"net/http"
 	"github.com/gin-gonic/gin"
 	"github.com/kunxl-gg/Amrit-Career-Counsellor.git/helpers"
 	"github.com/neo4j/neo4j-go-driver/v5/neo4j"
+	"net/http"
 )
 
-func AddStandAloneNode(givenctx *gin.Context) {
-	// Getting the background Context
+func QueryNodeController(givenctx *gin.Context) {
+	// Getting a background context
 	ctx := context.Background()
 	driver := helpers.MakeConnectionWithDb(ctx)
 	defer driver.Close(ctx)
 
+	// Making a query
+	result, err := neo4j.ExecuteQuery(
+		ctx, 
+		driver, 
+		"MATCH (p:Person {name: $name}) RETURN p.name AS name",
+		map[string]any {
+			"name": "Kunal Tiwari",
+		},
+		neo4j.EagerResultTransformer,
+		neo4j.ExecuteQueryWithDatabase("neo4j"))
+	
+	if err != nil {
+		panic(err)
+	}
 
+	// Iterating over the result
+	var finalResponse string = " "
+	for _, record := range result.Records {
+		name, _ := record.Get("name")
+		finalResponse  += name.(string)
+	}
+
+	givenctx.JSON(
+		http.StatusOK,
+		gin.H{
+			"answer": finalResponse,
+		},
+	)
 }
 
 func AddNodeController(givenctx *gin.Context) {
@@ -27,9 +54,9 @@ func AddNodeController(givenctx *gin.Context) {
 	driver := helpers.MakeConnectionWithDb(ctx)
 	defer driver.Close(ctx)
 
-	_, err := neo4j.ExecuteQuery(ctx, driver, "CREATE (p:Person {name: $name} ) -[:LIKES]->(:Person {name:$simp}) RETURN p", map[string]any{
-		"simp": "Kunal Tiwari",
-		"name": "Jesika Rai",
+	_, err := neo4j.ExecuteQuery(ctx, driver, "CREATE (p:Person {name: $name} ) -[:LIKES]->(:Person {name:$tech}) RETURN p", map[string]any{
+		"tech": "Node.js",
+		"name": "Kunal Tiwari",
 	}, neo4j.EagerResultTransformer,
 		neo4j.ExecuteQueryWithDatabase("neo4j"))
 
@@ -54,10 +81,10 @@ func UpdateNodeController(givenctx *gin.Context) {
 	_, err := neo4j.ExecuteQuery(
 		ctx, 
 		driver, 
-		"MATCH (p:Person {name: $name}) MERGE (p) -[:LIKES]->(:Person {name:$simp})",
+		"MATCH (p:Person {name: $name}) MERGE (p) -[:LIKES]->(:Person {name:$tech})",
 		map[string]any {
-			"simp": "Dhruv Dighe",
-			"name": "Siya Bhadra",
+			"tech": "Flutter",
+			"name": "Kunal Tiwari",
 		}, neo4j.EagerResultTransformer, neo4j.ExecuteQueryWithDatabase("neo4j"))
 	if err != nil { 
 		panic(err)

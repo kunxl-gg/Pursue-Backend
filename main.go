@@ -20,6 +20,7 @@ func main() {
 	r.GET("/", controllers.PingController)
 	r.GET("/pay", nil)
 	r.GET(`/authenticate`, nil)
+	r.GET("/queryNode", controllers.QueryNodeController)
 	r.POST("/addNode", controllers.AddNodeController)
 	r.POST("/updateNode", controllers.UpdateNodeController)
 

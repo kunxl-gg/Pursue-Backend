@@ -54,7 +54,7 @@ func AddNodeController(givenctx *gin.Context) {
 	driver := helpers.MakeConnectionWithDb(ctx)
 	defer driver.Close(ctx)
 
-	_, err := neo4j.ExecuteQuery(ctx, driver, "CREATE (p:Person {name: $name} ) -[:LIKES]->(:Person {name:$tech}) RETURN p", map[string]any{
+	_, err := neo4j.ExecuteQuery(ctx, driver, "CREATE (p:Person {name: $name}) -[:LIKES]->(:Person {name:$tech}) RETURN p", map[string]any{
 		"tech": "Node.js",
 		"name": "Kunal Tiwari",
 	}, neo4j.EagerResultTransformer,

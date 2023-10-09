@@ -1,6 +1,6 @@
 package types
 
-type Node struct {
-	data interface{}
-	next *Node
-}
+import "github.com/gin-gonic/gin"
+
+var AdminRoutes *gin.RouterGroup
+var UserRoutes *gin.RouterGroup

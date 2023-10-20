@@ -10,8 +10,8 @@ import (
 
 // Initialising the necessary configurations
 func init() {
-	initialisers.LoadDB()
 	initialisers.LoadEnvVariables()
+	initialisers.InitialiseFirebase()
 }
 
 func main() {
@@ -30,8 +30,12 @@ func main() {
 	r.GET("/pay", nil)
 	r.GET(`/authenticate`, nil)
 	r.GET("/queryNode", controllers.QueryNodeController)
+	r.GET("/readDB", controllers.CountUserController)
 	r.POST("/addNode", controllers.AddNodeController)
 	r.POST("/updateNode", controllers.UpdateNodeController)
+	r.POST("/updateDB", controllers.UpdateDataController)
+	r.GET("/users", controllers.ListOfUsersController)
+	r.GET("/paidUsers", controllers.ListOfPaidUsersController)
 
 	// Starting the server
 	r.Run(":8080")

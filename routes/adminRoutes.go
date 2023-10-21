@@ -10,4 +10,7 @@ import (
 func SetupRoutes() {
 	types.AdminRoutes.Use(middlewares.CheckIfAdmin)
 	types.AdminRoutes.GET("/", controllers.PingController)
+	types.AdminRoutes.GET("/users", controllers.ListOfUsersController)
+	types.AdminRoutes.GET("/paidUsers", controllers.ListOfPaidUsersController)
+	types.AdminRoutes.GET("/:userID", nil)
 }

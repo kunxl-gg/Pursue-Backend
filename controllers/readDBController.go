@@ -1,17 +1,15 @@
 package controllers
 
 import (
-	"fmt"
-	"github.com/gin-gonic/gin"
 	"github.com/kunxl-gg/Amrit-Career-Counsellor.git/initialisers"
 	"google.golang.org/api/iterator"
 	"log"
-	"net/http"
-	"strconv"
 )
 
 func CountTotalUsers() int {
+	// Initialising the global variables for client and context
 	ctx, client := initialisers.InitialiseFirebase()
+	defer client.Close()
 
 	// Getting the itreator for the db
 	iter := client.Collection("Users").Documents(ctx)
@@ -31,10 +29,12 @@ func CountTotalUsers() int {
 }
 
 // Make a function to count the total Number of Paid Users
-func ListOfUsers() {
+func ListOfUsers() []map[string]interface{} {
 	ctx, client := initialisers.InitialiseFirebase()
+	defer client.Close()
 
 	iter := client.Collection("Users").Documents(ctx)
+	var Users []map[string]interface{}
 
 	for {
 		data, err := iter.Next()
@@ -44,13 +44,16 @@ func ListOfUsers() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		fmt.Println(data.Data()["First Name"])
+		Users = append(Users, data.Data())
 	}
+
+	return Users
 }
 
 // Make a function to Fetch the Data of a particular Person
 func ListOfPaidUsers() []map[string]interface{} {
 	ctx, client := initialisers.InitialiseFirebase()
+	defer client.Close()
 
 	iter := client.Collection("Users").Documents(ctx)
 
@@ -69,27 +72,4 @@ func ListOfPaidUsers() []map[string]interface{} {
 	}
 
 	return Users
-}
-
-// CountUserController Make a function to fetch any data from the given DB
-func CountUserController(ctx *gin.Context) {
-	var count int = CountTotalUsers()
-	ctx.String(http.StatusOK, strconv.Itoa(count))
-}
-
-// ListOfUsersController Controller for the list of Users
-func ListOfUsersController(ctx *gin.Context) {
-	ListOfUsers()
-	ctx.String(http.StatusOK, "This is working")
-}
-
-// ListOfPaidUsersController Controller for the list of Paid Users
-func ListOfPaidUsersController(ctx *gin.Context) {
-	users := ListOfPaidUsers()
-	ctx.JSON(
-		http.StatusOK,
-		gin.H{
-			"result": users,
-		},
-	)
 }

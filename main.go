@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/kunxl-gg/Amrit-Career-Counsellor.git/controllers"
 	"github.com/kunxl-gg/Amrit-Career-Counsellor.git/initialisers"
 	"github.com/kunxl-gg/Amrit-Career-Counsellor.git/routes"
 	"github.com/kunxl-gg/Amrit-Career-Counsellor.git/types"
@@ -22,17 +21,9 @@ func main() {
 	types.AdminRoutes = r.Group("/api/admin")
 	types.UserRoutes = r.Group("/api/user")
 
-	// Calling the Function SetupRoutes
-	routes.SetupRoutes()
-
-	// Defining all the routes
-	r.GET("/", controllers.PingController)
-	r.GET("/pay", nil)
-	r.GET(`/authenticate`, nil)
-	r.GET("/queryNode", controllers.QueryNodeController)
-	r.POST("/addNode", controllers.AddNodeController)
-	r.POST("/updateNode", controllers.UpdateNodeController)
-	r.POST("/updateDB", controllers.UpdateDataController)
+	// Methods to call the Admin and User Routes
+	routes.SetupAdminRoutes()
+	routes.SetupUserRoutes()
 
 	// Starting the server
 	r.Run(":8080")

@@ -3,22 +3,21 @@ package controllers
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/kunxl-gg/Amrit-Career-Counsellor.git/types"
+	"net/http"
 )
 
+// UpdateDataController Method to add Element to Firebase
 func UpdateDataController(ctx *gin.Context) {
 
-	var requestBody struct {
-		name       string
-		isPaidUser string
-		stage      string
-	}
+	// Global Variable for catching the FirebaseUser
+	var requestBody types.FirebaseUser
 
-	ctx.Bind(&requestBody)
-
-	fmt.Println(requestBody.name, requestBody.stage, requestBody.isPaidUser)
-
-	err := UpdateDataToDB(requestBody.name, requestBody.isPaidUser, requestBody.stage)
+	// Binding the incoming request to the request body
+	err := ctx.Bind(&requestBody)
 	if err != nil {
-		fmt.Println(err)
+		ctx.String(http.StatusInternalServerError, "There was an Error in Reading the Request body ", err)
 	}
+	fmt.Println(requestBody.Name, requestBody.Stage, requestBody.IsPaidUser)
+
 }

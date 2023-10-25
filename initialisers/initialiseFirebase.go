@@ -1,11 +1,13 @@
 package initialisers
 
 import (
-	"cloud.google.com/go/firestore"
 	"context"
+	"log"
+	"os"
+
+	"cloud.google.com/go/firestore"
 	firebase "firebase.google.com/go"
 	"google.golang.org/api/option"
-	"log"
 )
 
 func InitialiseFirebase() (context.Context, *firestore.Client) {
@@ -15,9 +17,15 @@ func InitialiseFirebase() (context.Context, *firestore.Client) {
 	conf := &firebase.Config{
 		ProjectID: "amritcounsellor-17082",
 	}
+	
+	// Getting the path of the current working directory
+	curDir, err := os.Getwd()
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	// Configuring the secret key
-	opt := option.WithCredentialsFile("/Users/kunaltiwari/Desktop/Projects/Amrit-Career-Counsellor/secret-key.json")
+	opt := option.WithCredentialsFile(curDir + "/secret-key.json")
 
 	// Initialise the Ap
 	app, err := firebase.NewApp(ctx, conf, opt)

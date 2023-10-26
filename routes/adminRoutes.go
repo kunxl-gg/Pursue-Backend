@@ -8,7 +8,10 @@ import (
 )
 
 func SetupAdminRoutes() {
+	// Common middleware for all the Admin Routes
 	types.AdminRoutes.Use(middlewares.CheckIfAdmin)
+
+	// URL to check if the server is up
 	types.AdminRoutes.GET("/", controllers.PingController)
 
 	// Firebase call URLs

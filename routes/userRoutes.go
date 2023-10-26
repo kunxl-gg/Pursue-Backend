@@ -9,7 +9,7 @@ import (
 
 func SetupUserRoutes() {
 	// URL to the Payment Gateway
-	types.UserRoutes.GET("/pay", nil)
+	types.UserRoutes.GET("/pay", controllers.PayController)
 
 	// URL for querying information from the Graph DB
 	types.UserRoutes.GET("/queryNode", controllers.QueryNodeController)

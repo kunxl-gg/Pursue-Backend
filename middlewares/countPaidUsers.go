@@ -5,6 +5,7 @@ import (
 	"google.golang.org/api/iterator"
 )
 
+// CountPaidUsers counts the number of Paid Users
 func CountPaidUsers() (int, error) {
 	// Initialising the Context and Client
 	ctx, client := initialisers.InitialiseFirebase()

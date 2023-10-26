@@ -10,6 +10,7 @@ import (
 	"google.golang.org/api/option"
 )
 
+// InitialiseFirebase initialises the Firebase API Client and a background context
 func InitialiseFirebase() (context.Context, *firestore.Client) {
 
 	// Define the background Context and Configuration

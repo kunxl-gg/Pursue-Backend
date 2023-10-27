@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-// UpdateDataController Method to add Element to Firebase
+// AddUserController - Method to add Element to Firebase
 func AddUserController(ctx *gin.Context) {
 
 	// Global Variable for catching the FirebaseUser

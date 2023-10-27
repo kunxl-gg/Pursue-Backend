@@ -5,9 +5,5 @@ import (
 )
 
 func PayController(ctx *gin.Context) {
-	// Check for existing User
-	// Create a new User if not found
-	// Find out Payment methods
-	// Initiate Payments
-	// Redirect to the Payment Gateway
+	// The controller for the Payment Gateway 
 }

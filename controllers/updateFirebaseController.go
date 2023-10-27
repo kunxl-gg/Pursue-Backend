@@ -8,7 +8,7 @@ import (
 )
 
 // UpdateDataController Method to add Element to Firebase
-func UpdateDataController(ctx *gin.Context) {
+func AddUserController(ctx *gin.Context) {
 
 	// Global Variable for catching the FirebaseUser
 	var requestBody types.FirebaseUser

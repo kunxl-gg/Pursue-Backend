@@ -1,10 +1,8 @@
-package controllers
+package middlewares
 
-import (
-	"github.com/kunxl-gg/Amrit-Career-Counsellor.git/initialisers"
-)
+import "github.com/kunxl-gg/Amrit-Career-Counsellor.git/initialisers"
 
-func UpdateDataToDB(name string, isPaidUser string, stage string) error {
+func AddUserToFirebase(name string, isPaidUser string, stage string) error {
 	// Initialising the client and context to interact with Firebase
 	ctx, client := initialisers.InitialiseFirebase()
 	defer client.Close()

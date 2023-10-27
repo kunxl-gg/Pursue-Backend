@@ -17,17 +17,16 @@ func CountPaidUsers() (int, error) {
 
 	// Looping through all the Users
 	for {
-		_, err := iter.Next()
-
-		// Checking for the End of the list of Users
+		data, err := iter.Next()
 		if err == iterator.Done {
 			break
 		}
 		if err != nil {
 			return 0, err
 		}
-		// Incrementing the counter by 1
-		count++
+		if data.Data()["isPaid"] == true {
+			count++
+		}
 	}
 
 	// Returning the final Count of all The Users

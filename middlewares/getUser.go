@@ -7,8 +7,8 @@ import (
 )
 
 // MIDDELWARE: GetUser - Get the User from Firestore using the userID
-func GetUser(userID string) {
-	// Client and context 
+func GetUserFromFirebase(userID string) {
+	// Client and context
 	ctx, client := initialisers.InitialiseFirebase()
 	defer client.Close()
 

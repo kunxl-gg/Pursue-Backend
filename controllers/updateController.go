@@ -2,10 +2,11 @@ package controllers
 
 import (
 	"context"
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/kunxl-gg/Amrit-Career-Counsellor.git/helpers"
 	"github.com/neo4j/neo4j-go-driver/v5/neo4j"
-	"net/http"
 )
 
 func QueryNodeController(givenctx *gin.Context) {

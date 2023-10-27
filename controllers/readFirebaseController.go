@@ -18,7 +18,7 @@ func CountUserController(ctx *gin.Context) {
 
 // CountPaidUserController Method to fetch the total Count of Paid Users
 func CountPaidUserController(ctx *gin.Context) {
-
+	
 }
 
 // ListOfUsersController Method to fetch Total User  List

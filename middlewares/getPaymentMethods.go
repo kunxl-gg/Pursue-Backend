@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-// MIDDLEWARE: GetPaymentMethods - Gets the list of Payment Methods
+// MIDDLWARE: GetPaymentMethods - Gets the list of Payment Methods
 func GetPaymentMethods() {
 	
 	// JustPay API URL and Merchant ID

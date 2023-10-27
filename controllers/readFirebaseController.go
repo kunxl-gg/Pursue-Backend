@@ -3,9 +3,11 @@ package controllers
 // This File has the Controllers for all the Read Operations to Firebase
 
 import (
-	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
+
+	"github.com/gin-gonic/gin"
+	"github.com/kunxl-gg/Amrit-Career-Counsellor.git/middlewares"
 )
 
 // CountUserController Function to fetch Total User Count
@@ -37,4 +39,10 @@ func ListOfPaidUsersController(ctx *gin.Context) {
 		gin.H{
 			"result": users,
 		})
+}
+
+// GetUserController Method to fetch a single User
+func GetUserController(ctx *gin.Context) {
+	userId := ctx.Param("userID")
+	middlewares.GetUser(userId)
 }

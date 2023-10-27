@@ -17,7 +17,7 @@ func SetupAdminRoutes() {
 	// Firebase call URLs
 	types.AdminRoutes.GET("/users", controllers.ListOfUsersController)
 	types.AdminRoutes.GET("/paidUsers", controllers.ListOfPaidUsersController)
-	types.AdminRoutes.GET("/:userID", nil)
+	types.AdminRoutes.GET("/:userID", controllers.GetUserController)
 
 	// URLs to update the Graph Database
 	types.AdminRoutes.GET("/addNode", controllers.AddNodeController)

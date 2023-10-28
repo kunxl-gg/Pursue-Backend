@@ -12,3 +12,7 @@ type FirebaseUser struct {
 	IsPaidUser bool
 	Stage      int
 }
+
+type Node struct {
+	NodeTitle *string
+}

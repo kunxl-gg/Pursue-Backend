@@ -23,8 +23,8 @@ func SetupAdminRoutes() {
 	//types.AdminRoutes.GET("/:userId", controllers.DeleteUserController)
 
 	// URLs to update the Graph Database
-	types.AdminRoutes.GET("/addNode", controllers.AddNodeController)
-	types.AdminRoutes.GET("/updateNode", controllers.UpdateNodeController)
+	types.AdminRoutes.POST("/addNode", controllers.AddNodeController)
+	types.AdminRoutes.POST("/updateNode", controllers.UpdateNodeController)
 
 	// URLs to deal with the Admin User
 	types.AdminRoutes.POST("/addAdminUser", nil)

@@ -4,11 +4,10 @@ import (
 	"context"
 	"github.com/kunxl-gg/Amrit-Career-Counsellor.git/initialisers"
 	"github.com/neo4j/neo4j-go-driver/v5/neo4j"
-	"log"
 )
 
 // AddNode - Method to add Node to database
-func AddNode(NodeTitle string) {
+func AddNode(NodeTitle string) error {
 
 	// Getting the Background Context
 	ctx := context.Background()
@@ -22,10 +21,10 @@ func AddNode(NodeTitle string) {
 		"name": NodeTitle,
 	}, neo4j.EagerResultTransformer, neo4j.ExecuteQueryWithDatabase("neo4j"))
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
 	// After everything goes fine
-	return
+	return nil
 
 }

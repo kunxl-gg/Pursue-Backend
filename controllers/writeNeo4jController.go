@@ -1,12 +1,9 @@
 package controllers
 
 import (
-	"context"
 	"github.com/gin-gonic/gin"
-	"github.com/kunxl-gg/Amrit-Career-Counsellor.git/initialisers"
 	Neo4j "github.com/kunxl-gg/Amrit-Career-Counsellor.git/middlewares/neo4j"
 	"github.com/kunxl-gg/Amrit-Career-Counsellor.git/types"
-	"github.com/neo4j/neo4j-go-driver/v5/neo4j"
 	"net/http"
 )
 
@@ -21,31 +18,30 @@ func AddNodeController(ctx *gin.Context) {
 	}
 
 	// Adding Node to the DB
-	Neo4j.AddNode(*NodeDetails.NodeTitle)
+	err = Neo4j.AddNode(*NodeDetails.NodeTitle)
+	if err != nil {
+		ctx.String(http.StatusBadRequest, err.Error())
+	}
+
+	// Sending a 200 Response if everything goes fine
+	ctx.String(http.StatusOK, "Added a Node ", NodeDetails.NodeTitle)
+
 }
 
 // UpdateNodeController Method to update the children of a node in the Neo4j DB
-func UpdateNodeController(givenctx *gin.Context) {
+func UpdateNodeController(ctx *gin.Context) {
 
-	// Getting background context
-	ctx := context.Background()
-	driver := initialisers.InitialiseNeo4jDB(ctx)
-	defer driver.Close(ctx)
-
-	// Making an update
-	_, err := neo4j.ExecuteQuery(
-		ctx,
-		driver,
-		"MATCH (p:Person {name: $name}) MERGE (p) -[:LIKES]->(:Person {name:$tech})",
-		map[string]any{
-			"tech": "Flutter",
-			"name": "Kunal Tiwari",
-		}, neo4j.EagerResultTransformer, neo4j.ExecuteQueryWithDatabase("neo4j"))
-	if err != nil {
-		panic(err)
+	// Fetching the request Body
+	var link struct {
+		Parent string
+		Child  string
 	}
+	ctx.Bind(&link)
 
-	givenctx.JSON(
+	// Updating the link
+	_ = Neo4j.UpdateLinkToNode(link.Parent, link.Child)
+
+	ctx.JSON(
 		http.StatusOK,
 		gin.H{
 			"answer": "Updated",

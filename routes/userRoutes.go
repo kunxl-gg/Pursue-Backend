@@ -12,9 +12,12 @@ func SetupUserRoutes() {
 	types.UserRoutes.GET("/pay", controllers.PayController)
 
 	// URL for querying information from the Graph DB
-	types.UserRoutes.GET("/queryNode", controllers.QueryNodeController)
+	types.UserRoutes.POST("/queryNode", controllers.QueryNodeController)
 
 	// Calls to the Firebase DB from the Users End
 	types.UserRoutes.POST("/addUser", controllers.AddUserController)
 	types.UserRoutes.POST("/updateStageForUser/:userId", controllers.UpdateStageOfUserController)
+
+	// Calls to Mixpanel
+	types.UserRoutes.POST("/addEvent", controllers.TrackMixpanelController)
 }

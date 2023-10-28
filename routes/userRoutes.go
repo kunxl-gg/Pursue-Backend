@@ -15,6 +15,6 @@ func SetupUserRoutes() {
 	types.UserRoutes.GET("/queryNode", controllers.QueryNodeController)
 
 	// Calls to the Firebase DB from the Users End
-	types.UserRoutes.POST("/addUser", nil)
-	types.UserRoutes.POST("/updateStageForUser", nil)
+	types.UserRoutes.POST("/addUser", controllers.AddUserController)
+	types.UserRoutes.POST("/updateStageForUser/:userId", controllers.UpdateStageOfUserController)
 }

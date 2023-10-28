@@ -1,22 +1,26 @@
 package middlewares
 
-import "github.com/kunxl-gg/Amrit-Career-Counsellor.git/initialisers"
+import (
+	"github.com/kunxl-gg/Amrit-Career-Counsellor.git/initialisers"
+)
 
-func AddUserToFirebase(name string, isPaidUser string, stage string) error {
+// AddUserToFirebase Method to add a User to Firestore
+func AddUserToFirebase(name string, isPaidUser bool, stage int) (string, error) {
+
 	// Initialising the client and context to interact with Firebase
 	ctx, client := initialisers.InitialiseFirebase()
 	defer client.Close()
 
 	// Adding data to the DB
-	_, _, err := client.Collection("Users").Add(ctx, map[string]interface{}{
+	doc, _, err := client.Collection("Users").Add(ctx, map[string]interface{}{
 		"First Name": name,
 		"Stage":      stage,
-		"Paid":       isPaidUser,
+		"IsPaidUser": isPaidUser,
 	})
-
 	if err != nil {
-		return err
+		return "", err
 	}
 
-	return nil
+	return doc.ID, nil
+
 }

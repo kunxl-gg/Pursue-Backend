@@ -18,7 +18,11 @@ func CountUserController(ctx *gin.Context) {
 
 // CountPaidUserController Method to fetch the total Count of Paid Users
 func CountPaidUserController(ctx *gin.Context) {
-
+	count, err := middlewares.CountPaidUsers()
+	if err != nil {
+		ctx.String(http.StatusBadRequest, err.Error())
+	}
+	ctx.String(http.StatusOK, strconv.Itoa(count))
 }
 
 // ListOfUsersController Method to fetch Total User  List
@@ -43,6 +47,19 @@ func ListOfPaidUsersController(ctx *gin.Context) {
 
 // GetUserController Method to fetch a single User
 func GetUserController(ctx *gin.Context) {
+
+	// Fetching the UserId from the path parameter
 	userId := ctx.Param("userID")
-	middlewares.GetUserFromFirebase(userId)
+
+	// Getting the user using the userID
+	doc, err := middlewares.GetUserFromFirebase(userId)
+	if err != nil {
+		ctx.String(http.StatusBadRequest, err.Error())
+	}
+
+	// Returning Final Json when everything goes fine
+	ctx.JSON(
+		http.StatusOK,
+		doc.Data(),
+	)
 }

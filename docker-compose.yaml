@@ -10,10 +10,11 @@ services:
     depends_on:
       - neo4j
     environment:
-      - NEO4J_URI=neo4j://localhost"
-      - NEO4J_USERNAME=neo4j
-      - NEO4J_PASSWORD=secretgraph
-
+      - NEO4JDB_URL=bolt://neo4j:7687
+      - NEO4JDB_USERNAME=neo4j
+      - NEO4JDB_PASSWORD=secretgraph
+    networks:
+      - pursue-network
   neo4j:
     image: neo4j:latest
     ports:
@@ -28,3 +29,9 @@ services:
     volumes:
       - ./neo4j-data:/data
       - ./neo4j-logs:/logs
+    networks:
+      - pursue-network
+
+networks:
+  pursue-network:
+    driver: bridge

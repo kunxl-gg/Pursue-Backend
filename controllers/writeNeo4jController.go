@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	Neo4j "github.com/kunxl-gg/Amrit-Career-Counsellor.git/middlewares/neo4j"
 	"github.com/kunxl-gg/Amrit-Career-Counsellor.git/types"
@@ -16,6 +17,8 @@ func AddNodeController(ctx *gin.Context) {
 	if err != nil {
 		ctx.String(http.StatusBadRequest, err.Error())
 	}
+
+	fmt.Println(NodeDetails.NodeTitle)
 
 	// Adding Node to the DB
 	err = Neo4j.AddNode(*NodeDetails.NodeTitle)

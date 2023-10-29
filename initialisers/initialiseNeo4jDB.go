@@ -2,6 +2,7 @@ package initialisers
 
 import (
 	"context"
+	"fmt"
 	"github.com/neo4j/neo4j-go-driver/v5/neo4j"
 	"os"
 )
@@ -25,6 +26,7 @@ func InitialiseNeo4jDB(ctx context.Context) neo4j.DriverWithContext {
 	// Verifying the Connection
 	err = driver.VerifyConnectivity(ctx)
 	if err != nil {
+		fmt.Println("There was an error in establishing connection")
 		panic(err)
 	}
 

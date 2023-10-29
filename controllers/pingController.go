@@ -5,10 +5,6 @@ import (
 	"net/http"
 )
 
-func PingController(context *gin.Context) {
-	context.JSON(
-		http.StatusOK,
-		gin.H{
-			"Message": "This is working",
-		})
+func PingController(ctx *gin.Context) {
+	ctx.String(http.StatusOK, "Pursuse Says Hello!")
 }

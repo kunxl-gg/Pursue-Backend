@@ -8,8 +8,12 @@ import (
 // Define all the User Routes Here
 
 func SetupUserRoutes() {
-	// URL to the Payment Gateway
-	types.UserRoutes.GET("/pay", controllers.PayController)
+	// URL to the Payments System
+	types.UserRoutes.POST("/createCustomer", controllers.CreateCustomer)
+	types.UserRoutes.GET("/getCustomer", nil)
+	types.UserRoutes.GET("/getPaymentMethods", nil)
+	types.UserRoutes.GET("/createOrder", nil)
+	types.UserRoutes.GET("/initiateUPIPayment")
 
 	// URL for querying information from the Graph DB
 	types.UserRoutes.POST("/queryNode", controllers.QueryNodeController)

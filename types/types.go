@@ -16,3 +16,11 @@ type FirebaseUser struct {
 type Node struct {
 	NodeTitle *string
 }
+
+type JuspayCustomer struct {
+	EmailAddress *string
+	FirstName    *string
+	LastName     *string
+	MobileNumber int
+	CountryCode  int
+}

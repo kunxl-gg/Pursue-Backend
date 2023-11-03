@@ -7,23 +7,22 @@ import (
 	"os"
 )
 
-// MIDDLWARE: GetPaymentMethods - Gets the list of Payment Methods
-func GetPaymentMethods() {
-	
+// GetPaymentMethods - Gets the list of Payment Methods
+func GetPaymentMethods() (string, error) {
+
 	// JustPay API URL and Merchant ID
 	juspayServerURL := os.Getenv("JUSPAY_SERVER_URL")
-	// juspayAPIKey := os.Getenv("JUSPAY_API_KEY")
 	merchantID := os.Getenv("MERCHANT_ID")
 
 	// Final URL for fetching Payment Methods
-	url := juspayServerURL + "/merchant/" + merchantID + "/paymentmethods"
+	url := juspayServerURL + "/merchants/" + merchantID + "/paymentmethods"
 	fmt.Println(url)
 
 	// Creating a New Request
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		fmt.Println(err)
-		return 
+		return "", nil
 	}
 
 	// Adding MerchantID to request Header
@@ -34,7 +33,7 @@ func GetPaymentMethods() {
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		fmt.Println(err)
-		return 
+		return "", err
 	}
 
 	// Closing the Response Body
@@ -44,10 +43,11 @@ func GetPaymentMethods() {
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Println(err)
-		return 
+		return "", err
 	}
 
-	// Printing the Response
-	fmt.Println("The Payment Methods are: ", string(body))
+	fmt.Println(string(body))
 
+	// Printing the Response
+	return string(body), nil
 }

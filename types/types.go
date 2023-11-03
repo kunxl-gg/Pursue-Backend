@@ -2,6 +2,7 @@ package types
 
 import (
 	"github.com/gin-gonic/gin"
+	"os"
 )
 
 var AdminRoutes *gin.RouterGroup
@@ -24,3 +25,7 @@ type JuspayCustomer struct {
 	MobileNumber int
 	CountryCode  int
 }
+
+var MerchantID string = os.Getenv("MERCHANT_ID")
+var JuspayAPIKey string = os.Getenv("JUSPAY_API_KEY")
+var Base64encodedAPIKey = os.Getenv("Base64EncodedAPIKey")

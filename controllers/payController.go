@@ -15,7 +15,7 @@ func GetCustomerController(ctx *gin.Context) {
 	middlewares.GetCustomer()
 }
 
-// CreateCustomer - Controller to Interact with the Juspay Server to Create Customer
+// CreateCustomerController - Controller to Interact with the Juspay Server to Create Customer
 func CreateCustomerController(ctx *gin.Context) {
 
 	// Fetching the context body
@@ -42,7 +42,51 @@ func CreateCustomerController(ctx *gin.Context) {
 	)
 }
 
+// GetPaymentMethodsController - Controller Method to fetch the
 func GetPaymentMethodsController(ctx *gin.Context) {
+	resp, err := middlewares.GetPaymentMethods()
+	if err != nil {
+		ctx.String(http.StatusInternalServerError, err.Error())
+	}
 
-	// Getting All the Payment Methods
+	ctx.JSON(
+		http.StatusOK,
+		resp,
+	)
+}
+
+// CreateOrderController - Controller Method to Create an Order on the Juspay Server
+func CreateOrderController(ctx *gin.Context) {
+	var requestBody struct {
+		Uuid     int
+		Amount   string
+		Currency string
+	}
+
+	// Reading Request Body
+	err := ctx.Bind(&requestBody)
+	if err != nil {
+		ctx.String(http.StatusInternalServerError, err.Error())
+	}
+
+	// Creating an Order
+	resp, err := middlewares.CreateOrder(requestBody.Uuid, requestBody.Amount, requestBody.Currency)
+	if err != nil {
+		ctx.String(http.StatusInternalServerError, err.Error())
+	}
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		ctx.String(http.StatusInternalServerError, err.Error())
+	}
+
+	ctx.JSON(
+		http.StatusInternalServerError,
+		string(body))
+
+}
+
+// InitiatePaymentController - Controller Method to InitiatePayment Using API
+func InitiatePaymentController() {
+
 }

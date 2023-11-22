@@ -21,6 +21,7 @@ func SetupUserRoutes() {
 	// Calls to the Firebase DB from the Users End
 	types.UserRoutes.POST("/addUser", controllers.AddUserController)
 	types.UserRoutes.POST("/updateStageForUser/:userId", controllers.UpdateStageOfUserController)
+	types.UserRoutes.POST("/updateSelectedOption/:userId", controllers.UpdateOptionsController)
 
 	// Calls to Mixpanel
 	types.UserRoutes.POST("/addEvent", controllers.TrackMixpanelController)

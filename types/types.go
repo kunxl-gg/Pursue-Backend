@@ -1,8 +1,9 @@
 package types
 
 import (
-	"github.com/gin-gonic/gin"
 	"os"
+
+	"github.com/gin-gonic/gin"
 )
 
 var AdminRoutes *gin.RouterGroup
@@ -12,6 +13,8 @@ type FirebaseUser struct {
 	Name       *string
 	IsPaidUser bool
 	Stage      int
+	Options    []string
+	FinalCareerOptions []string
 }
 
 type Node struct {

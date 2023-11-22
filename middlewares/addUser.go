@@ -5,7 +5,7 @@ import (
 )
 
 // AddUserToFirebase Method to add a User to Firestore
-func AddUserToFirebase(name string, isPaidUser bool, stage int) (string, error) {
+func AddUserToFirebase(name string, isPaidUser bool, stage int, options []string, finalResult[]string) (string, error) {
 
 	// Initialising the client and context to interact with Firebase
 	ctx, client := initialisers.InitialiseFirebase()
@@ -16,6 +16,8 @@ func AddUserToFirebase(name string, isPaidUser bool, stage int) (string, error) 
 		"First Name": name,
 		"Stage":      stage,
 		"IsPaidUser": isPaidUser,
+		"Options":    options,
+		"FinalCareerOptions": finalResult,
 	})
 	if err != nil {
 		return "", err

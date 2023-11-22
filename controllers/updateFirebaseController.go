@@ -22,7 +22,7 @@ func AddUserController(ctx *gin.Context) {
 	}
 
 	// Adding User to Firestore
-	userId, err := middlewares.AddUserToFirebase(*user.Name, user.IsPaidUser, user.Stage)
+	userId, err := middlewares.AddUserToFirebase(*user.Name, user.IsPaidUser, user.Stage, user.Options, user.FinalCareerOptions)
 	if err != nil {
 		log.Fatal("There was an error in adding user to firestore", err)
 	}
@@ -70,4 +70,25 @@ func UpdateStageOfUserController(ctx *gin.Context) {
 	// Sending 200 response if everything goes fine
 	ctx.String(http.StatusOK, "Updated Stage for User ", userId)
 
+}
+
+func UpdateOptionsController(ctx *gin.Context) {
+	
+	// Fetching the UserId from the URL path
+	var userId string = ctx.Param("userId")
+	fmt.Println(userId)
+
+	var options struct {
+		NewOptionSelected *string
+	}
+	ctx.Bind(&options)
+
+	// Updating Stage for User
+	err := middlewares.UpdateSelectedOption(userId, *options.NewOptionSelected)
+	if err != nil {
+		ctx.String(http.StatusBadRequest, err.Error())
+	}
+
+	// Sending 200 response if everything goes fine
+	ctx.String(http.StatusOK, "Updated Options for User ", userId)
 }

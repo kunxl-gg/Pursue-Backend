@@ -76,3 +76,22 @@ func GetCareerOptionsController(ctx *gin.Context) {
 		},	
 	)
 }
+
+// GetCareerOptionController - Method to fetch one specific Career Option from the List of Options
+func GetCareerOptionController(ctx *gin.Context) {
+
+	// Fetching the Career Title from the Request Body
+	var CareerTitle struct {
+		Title *string 
+	}
+	ctx.Bind(&CareerTitle)
+
+	// Getting the Career Option from the List of Options
+	careerOption := firebase_middleware.RetrieveCareerDescription(*CareerTitle.Title)
+
+	// Returning the Career Option
+	ctx.JSON(
+		http.StatusOK,
+		careerOption,
+	)
+}

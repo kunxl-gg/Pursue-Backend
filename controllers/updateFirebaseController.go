@@ -74,6 +74,7 @@ func UpdateStageOfUserController(ctx *gin.Context) {
 
 }
 
+// UpdateOptionsController - Each User selects multiple options before getting to the final result, This is the method to update the options selected by the user
 func UpdateOptionsController(ctx *gin.Context) {
 
 	// Fetching the UserId from the URL path
@@ -95,6 +96,7 @@ func UpdateOptionsController(ctx *gin.Context) {
 	ctx.String(http.StatusOK, "Updated Options for User ", userId)
 }
 
+// UpdateFinalResultController - Method to update value of finalResult in Firestore
 func AddCareerDescriptionToFirebaseController(ctx *gin.Context) {
 
 	// Initialising a Global variable for the Firebase User

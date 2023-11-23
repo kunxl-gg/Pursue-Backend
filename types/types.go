@@ -2,7 +2,6 @@ package types
 
 import (
 	"os"
-
 	"github.com/gin-gonic/gin"
 )
 

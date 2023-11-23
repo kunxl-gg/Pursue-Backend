@@ -8,6 +8,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/kunxl-gg/Amrit-Career-Counsellor.git/middlewares"
+	firebase_middleware "github.com/kunxl-gg/Amrit-Career-Counsellor.git/middlewares/firebase"
 )
 
 // CountUserController Function to fetch Total User Count
@@ -61,5 +62,17 @@ func GetUserController(ctx *gin.Context) {
 	ctx.JSON(
 		http.StatusOK,
 		doc.Data(),
+	)
+}
+
+// GetCareerOptionsController Method to fetch the Career Options of a User
+func GetCareerOptionsController(ctx *gin.Context) {
+
+	description := firebase_middleware.ReadCareerDescriptionFromFirebase()
+	ctx.JSON(
+		http.StatusOK,
+		gin.H{
+			"result": description,
+		},	
 	)
 }

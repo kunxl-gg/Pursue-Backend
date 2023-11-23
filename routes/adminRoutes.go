@@ -24,6 +24,7 @@ func SetupAdminRoutes() {
 
 	// Firebase (CareerDescription) call URLs
 	types.AdminRoutes.POST("/addCareerDescription", controllers.AddCareerDescriptionToFirebaseController)
+	types.AdminRoutes.GET("/careerDescription", controllers.GetCareerOptionsController)
 
 	// URLs to update the Graph Database
 	types.AdminRoutes.POST("/addNode", controllers.AddNodeController)

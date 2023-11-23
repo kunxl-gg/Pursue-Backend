@@ -2,11 +2,13 @@ package controllers
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"github.com/kunxl-gg/Amrit-Career-Counsellor.git/middlewares"
-	"github.com/kunxl-gg/Amrit-Career-Counsellor.git/types"
 	"log"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
+	"github.com/kunxl-gg/Amrit-Career-Counsellor.git/middlewares"
+	firebase_middleware "github.com/kunxl-gg/Amrit-Career-Counsellor.git/middlewares/firebase"
+	"github.com/kunxl-gg/Amrit-Career-Counsellor.git/types"
 )
 
 // AddUserController - Method to add User to Firestore
@@ -73,7 +75,7 @@ func UpdateStageOfUserController(ctx *gin.Context) {
 }
 
 func UpdateOptionsController(ctx *gin.Context) {
-	
+
 	// Fetching the UserId from the URL path
 	var userId string = ctx.Param("userId")
 	fmt.Println(userId)
@@ -91,4 +93,25 @@ func UpdateOptionsController(ctx *gin.Context) {
 
 	// Sending 200 response if everything goes fine
 	ctx.String(http.StatusOK, "Updated Options for User ", userId)
+}
+
+func AddCareerDescriptionToFirebaseController(ctx *gin.Context) {
+
+	// Initialising a Global variable for the Firebase User
+	var careerDescription types.FirebaseCareerOption
+
+	// Binding the incoming JSON to the User variable
+	err := ctx.Bind(&careerDescription)
+	if err != nil {
+		log.Fatal("There was an error in reading the Incoming Json", err)
+	}
+
+	// Adding User to Firestore
+	careerId, err := firebase_middleware.AddCareerDescriptionToFirebase(*careerDescription.Name, *careerDescription.Description, careerDescription.TopColleges)
+	if err != nil {
+		log.Fatal("There was an error in adding user to firestore", err)
+	}
+
+	// Returning the final userID
+	ctx.String(http.StatusOK, string(careerId))
 }

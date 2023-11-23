@@ -10,11 +10,29 @@ var AdminRoutes *gin.RouterGroup
 var UserRoutes *gin.RouterGroup
 
 type FirebaseUser struct {
-	Name       *string
-	IsPaidUser bool
-	Stage      int
-	Options    []string
+	Name               *string
+	IsPaidUser         bool
+	Stage              int
+	Options            []string
 	FinalCareerOptions []string
+}
+
+type FirebaseAdminUser struct {
+	Name  *string
+	Email *string
+}
+
+type FirebaseCareerOption struct {
+	Name            *string
+	Description     *string
+	CareerPathSteps []string
+	AverageSalaries []map[string][]int
+	TopColleges     []TopCollge
+}
+
+type TopCollge struct {
+	Name  *string
+	Image *string
 }
 
 type Node struct {

@@ -5,7 +5,8 @@ import (
 	"github.com/kunxl-gg/Amrit-Career-Counsellor.git/types"
 )
 
-func AddCareerDescriptionToFirebase(name string, description string, topColleges []types.TopCollge) (string, error) {
+// AddCareerDescriptionToFirebase - Add Complete Career Description to Firebase
+func AddCareerDescriptionToFirebase(name string, description string, topColleges []types.TopCollge, averageSalaries []map[string][]int, careerPathSteps []string, courses []types.Courses, skills []types.Skills) (string, error) {
 
 	// Initialising the client and context to interact with Firebase
 	ctx, client := initialisers.InitialiseFirebase()
@@ -16,6 +17,10 @@ func AddCareerDescriptionToFirebase(name string, description string, topColleges
 		"Name": name,
 		"Description": description,
 		"TopColleges": topColleges,
+		"AverageSalaries": averageSalaries,
+		"CareerPathSteps": careerPathSteps,
+		"Courses": courses,
+		"Skills": skills,
 	})
 	if err != nil {
 		return "", err

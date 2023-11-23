@@ -6,6 +6,7 @@ import (
 	"google.golang.org/api/iterator"
 )
 
+// ReadCareerDescriptionFromFirebase - Retreve all the Career Descriptions from Firebase
 func ReadCareerDescriptionFromFirebase() []map[string]interface{} {
 	// Initialising the client and context to interact with Firebase
 	ctx, client := initialisers.InitialiseFirebase()

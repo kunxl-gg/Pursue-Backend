@@ -11,7 +11,7 @@ func SetupAdminRoutes() {
 	// Common middleware for all the Admin Routes
 	types.AdminRoutes.Use(middlewares.CheckIfAdmin)
 
-	// URL to check if the server is up
+	// Ping Route for Admin Routes
 	types.AdminRoutes.GET("/", controllers.PingController)
 
 	// Firebase (Users) call URLs

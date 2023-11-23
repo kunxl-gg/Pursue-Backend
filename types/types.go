@@ -6,9 +6,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Types for the Admin Routes and User Routes
 var AdminRoutes *gin.RouterGroup
 var UserRoutes *gin.RouterGroup
 
+// Types for Firebase Schema
 type FirebaseUser struct {
 	Name               *string
 	IsPaidUser         bool
@@ -28,6 +30,19 @@ type FirebaseCareerOption struct {
 	CareerPathSteps []string
 	AverageSalaries []map[string][]int
 	TopColleges     []TopCollge
+	Skills          []Skills
+	Courses         []Courses
+}
+
+type Courses struct {
+	Title       *string
+	Description *string
+	Image       *string
+}
+
+type Skills struct {
+	Title       *string
+	Description *string
 }
 
 type TopCollge struct {
@@ -35,10 +50,12 @@ type TopCollge struct {
 	Image *string
 }
 
+// Types for Neo4j DB
 type Node struct {
 	NodeTitle *string
 }
 
+// Types for the Payment Gateway
 type JuspayCustomer struct {
 	EmailAddress *string
 	FirstName    *string

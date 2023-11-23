@@ -107,7 +107,7 @@ func AddCareerDescriptionToFirebaseController(ctx *gin.Context) {
 	}
 
 	// Adding User to Firestore
-	careerId, err := firebase_middleware.AddCareerDescriptionToFirebase(*careerDescription.Name, *careerDescription.Description, careerDescription.TopColleges)
+	careerId, err := firebase_middleware.AddCareerDescriptionToFirebase(*careerDescription.Name, *careerDescription.Description, careerDescription.TopColleges, careerDescription.AverageSalaries, careerDescription.CareerPathSteps, careerDescription.Courses, careerDescription.Skills)
 	if err != nil {
 		log.Fatal("There was an error in adding user to firestore", err)
 	}

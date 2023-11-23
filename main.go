@@ -22,8 +22,8 @@ func main() {
 	r.GET("/", controllers.PingController)
 
 	// Grouping admin Routes together
-	types.AdminRoutes = r.Group("/api/admin")
-	types.UserRoutes = r.Group("/api/user")
+	types.AdminRoutes = r.Group("/admin")
+	types.UserRoutes = r.Group("/user")
 
 	// Methods to call the Admin and User Routes
 	routes.SetupAdminRoutes()

@@ -7,5 +7,5 @@ import (
 
 // PingController Function to check if the server is running
 func PingController(ctx *gin.Context) {
-	ctx.String(http.StatusOK, "Pursuse Says Hello World!")
+	ctx.String(http.StatusOK, "Pursuse Says Hello World! 1")
 }

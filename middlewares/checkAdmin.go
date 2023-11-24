@@ -5,5 +5,5 @@ import (
 )
 
 func CheckIfAdmin(ctx *gin.Context) {
-	// Checking if the user is admin or not
+	
 }

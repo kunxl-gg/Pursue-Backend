@@ -2,7 +2,6 @@ package types
 
 import (
 	"os"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -14,10 +13,9 @@ var UserRoutes *gin.RouterGroup
 type FirebaseUser struct {
 	Name               *string
 	Email              *string
-	PhoneNumber        uint
+	PhoneNumber        int
 	DidStartChatbot    bool
 	IsPaidUser         bool
-	Stage              int
 	Options            []string
 	FinalCareerOptions []string
 }
@@ -70,6 +68,7 @@ type JuspayCustomer struct {
 	CountryCode  int
 }
 
+// Constants for Evnironment Variables
 var MerchantID string = os.Getenv("MERCHANT_ID")
 var JuspayAPIKey string = os.Getenv("JUSPAY_API_KEY")
 var Base64encodedAPIKey = os.Getenv("Base64EncodedAPIKey")

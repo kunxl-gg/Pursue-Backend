@@ -22,7 +22,7 @@ func AddUserController(ctx *gin.Context) {
 	}
 
 	// Adding User to Firestore
-	userId, err := firebase_middleware.AddUserToFirebase(*user.Name, user.IsPaidUser, user.Stage, user.Options, user.FinalCareerOptions)
+	userId, err := firebase_middleware.AddUserToFirebase(*user.Name, user.IsPaidUser, user.Options, user.FinalCareerOptions, *user.Email, user.PhoneNumber, user.DidStartChatbot)
 	if err != nil {
 		log.Fatal("There was an error in adding user to firestore", err)
 	}

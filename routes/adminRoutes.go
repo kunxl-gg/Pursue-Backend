@@ -17,6 +17,7 @@ func SetupAdminRoutes() {
 	// Firebase (Users) call URLs
 	types.AdminRoutes.GET("/userCount", controllers.CountUserController)
 	types.AdminRoutes.GET("/paidUserCount", controllers.CountPaidUserController)
+	types.AdminRoutes.GET("/chatbotSessionsCount", controllers.CountTotalChatbotSessionsController)
 	types.AdminRoutes.GET("/users", controllers.ListOfUsersController)
 	types.AdminRoutes.GET("/paidUsers", controllers.ListOfPaidUsersController)
 	types.AdminRoutes.GET("/:userID", controllers.GetUserController)

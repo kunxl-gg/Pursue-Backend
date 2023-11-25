@@ -25,6 +25,15 @@ func CountPaidUserController(ctx *gin.Context) {
 	ctx.String(http.StatusOK, strconv.Itoa(count))
 }
 
+// CountTotalChatbotSessionsController Method to fetch the total Count of Chatbot Users
+func CountTotalChatbotSessionsController(ctx *gin.Context) {
+	count, err := firebase_middleware.CountTotalChatBotSessions()
+	if err != nil {
+		ctx.String(http.StatusBadRequest, err.Error())
+	}
+	ctx.String(http.StatusOK, strconv.Itoa(int(count)))
+}
+
 // ListOfUsersController Method to fetch Total User  List
 func ListOfUsersController(ctx *gin.Context) {
 	users := firebase_middleware.ListOfUsers()
@@ -94,3 +103,7 @@ func GetCareerOptionController(ctx *gin.Context) {
 		careerOption,
 	)
 }
+
+// GetCareerOptionByStageController - Method to fetch the Career Option by Stage
+
+// 

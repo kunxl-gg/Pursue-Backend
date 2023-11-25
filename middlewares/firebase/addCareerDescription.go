@@ -14,13 +14,13 @@ func AddCareerDescriptionToFirebase(name string, description string, topColleges
 
 	// Adding data to the DB
 	doc, _, err := client.Collection("CareerDescription").Add(ctx, map[string]interface{}{
-		"Name": name,
-		"Description": description,
-		"TopColleges": topColleges,
+		"Name":            name,
+		"Description":     description,
+		"TopColleges":     topColleges,
 		"AverageSalaries": averageSalaries,
 		"CareerPathSteps": careerPathSteps,
-		"Courses": courses,
-		"Skills": skills,
+		"Courses":         courses,
+		"Skills":          skills,
 	})
 	if err != nil {
 		return "", err

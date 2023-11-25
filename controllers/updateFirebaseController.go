@@ -4,9 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-
 	"github.com/gin-gonic/gin"
-	"github.com/kunxl-gg/Amrit-Career-Counsellor.git/middlewares"
 	firebase_middleware "github.com/kunxl-gg/Amrit-Career-Counsellor.git/middlewares/firebase"
 	"github.com/kunxl-gg/Amrit-Career-Counsellor.git/types"
 )
@@ -24,7 +22,7 @@ func AddUserController(ctx *gin.Context) {
 	}
 
 	// Adding User to Firestore
-	userId, err := middlewares.AddUserToFirebase(*user.Name, user.IsPaidUser, user.Stage, user.Options, user.FinalCareerOptions)
+	userId, err := firebase_middleware.AddUserToFirebase(*user.Name, user.IsPaidUser, user.Stage, user.Options, user.FinalCareerOptions)
 	if err != nil {
 		log.Fatal("There was an error in adding user to firestore", err)
 	}
@@ -41,7 +39,7 @@ func DeleteUserController(ctx *gin.Context) {
 	userId := ctx.Param("userId")
 
 	// Deleting the User from Firestore
-	err := middlewares.DeleteUser(userId)
+	err := firebase_middleware.DeleteUser(userId)
 	if err != nil {
 		ctx.String(http.StatusBadRequest, err.Error())
 	}
@@ -64,7 +62,7 @@ func UpdateStageOfUserController(ctx *gin.Context) {
 	fmt.Println(stage)
 
 	// Updating Stage for User
-	err := middlewares.UpdateStageOfUser(stage.Stage, userId)
+	err := firebase_middleware.UpdateStageOfUser(stage.Stage, userId)
 	if err != nil {
 		ctx.String(http.StatusBadRequest, err.Error())
 	}
@@ -87,7 +85,7 @@ func UpdateOptionsController(ctx *gin.Context) {
 	ctx.Bind(&options)
 
 	// Updating Stage for User
-	err := middlewares.UpdateSelectedOption(userId, *options.NewOptionSelected)
+	err := firebase_middleware.UpdateSelectedOption(userId, *options.NewOptionSelected)
 	if err != nil {
 		ctx.String(http.StatusBadRequest, err.Error())
 	}

@@ -2,6 +2,7 @@ package types
 
 import (
 	"os"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -12,6 +13,9 @@ var UserRoutes *gin.RouterGroup
 // Types for Firebase Schema
 type FirebaseUser struct {
 	Name               *string
+	Email              *string
+	PhoneNumber        uint
+	DidStartChatbot    bool
 	IsPaidUser         bool
 	Stage              int
 	Options            []string
@@ -19,8 +23,9 @@ type FirebaseUser struct {
 }
 
 type FirebaseAdminUser struct {
-	Name  *string
-	Email *string
+	Name     *string
+	Email    *string
+	Password *string
 }
 
 type FirebaseCareerOption struct {
@@ -37,6 +42,7 @@ type Courses struct {
 	Title       *string
 	Description *string
 	Image       *string
+	RedirectURl *string
 }
 
 type Skills struct {
@@ -45,8 +51,9 @@ type Skills struct {
 }
 
 type TopCollge struct {
-	Name  *string
-	Image *string
+	Name           *string
+	Image          *string
+	RedirectionUrl *string
 }
 
 // Types for Neo4j DB

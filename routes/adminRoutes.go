@@ -3,13 +3,13 @@ package routes
 // Define all the Admin Routes here
 import (
 	"github.com/kunxl-gg/Amrit-Career-Counsellor.git/controllers"
-	"github.com/kunxl-gg/Amrit-Career-Counsellor.git/middlewares"
+	firebase_middleware "github.com/kunxl-gg/Amrit-Career-Counsellor.git/middlewares/firebase"
 	"github.com/kunxl-gg/Amrit-Career-Counsellor.git/types"
 )
 
 func SetupAdminRoutes() {
 	// Common middleware for all the Admin Routes
-	types.AdminRoutes.Use(middlewares.CheckIfAdmin)
+	types.AdminRoutes.Use(firebase_middleware.CheckIfAdmin)
 
 	// Ping Route for Admin Routes
 	types.AdminRoutes.GET("/", controllers.PingController)

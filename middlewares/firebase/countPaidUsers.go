@@ -1,4 +1,4 @@
-package middlewares
+package firebase_middleware 
 
 import (
 	"github.com/kunxl-gg/Amrit-Career-Counsellor.git/initialisers"

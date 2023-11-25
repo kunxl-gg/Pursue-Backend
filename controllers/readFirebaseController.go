@@ -7,19 +7,18 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"github.com/kunxl-gg/Amrit-Career-Counsellor.git/middlewares"
 	firebase_middleware "github.com/kunxl-gg/Amrit-Career-Counsellor.git/middlewares/firebase"
 )
 
 // CountUserController Function to fetch Total User Count
 func CountUserController(ctx *gin.Context) {
-	count := middlewares.CountTotalUsers()
+	count := firebase_middleware.CountTotalUsers()
 	ctx.String(http.StatusOK, strconv.Itoa(count))
 }
 
 // CountPaidUserController Method to fetch the total Count of Paid Users
 func CountPaidUserController(ctx *gin.Context) {
-	count, err := middlewares.CountPaidUsers()
+	count, err := firebase_middleware.CountPaidUsers()
 	if err != nil {
 		ctx.String(http.StatusBadRequest, err.Error())
 	}
@@ -28,7 +27,7 @@ func CountPaidUserController(ctx *gin.Context) {
 
 // ListOfUsersController Method to fetch Total User  List
 func ListOfUsersController(ctx *gin.Context) {
-	users := middlewares.ListOfUsers()
+	users := firebase_middleware.ListOfUsers()
 	ctx.JSON(
 		http.StatusOK,
 		gin.H{
@@ -38,7 +37,7 @@ func ListOfUsersController(ctx *gin.Context) {
 
 // ListOfPaidUsersController Method to fetch the list of Paid Users
 func ListOfPaidUsersController(ctx *gin.Context) {
-	users := middlewares.ListOfPaidUsers()
+	users := firebase_middleware.ListOfPaidUsers()
 	ctx.JSON(
 		http.StatusOK,
 		gin.H{
@@ -53,7 +52,7 @@ func GetUserController(ctx *gin.Context) {
 	userId := ctx.Param("userID")
 
 	// Getting the user using the userID
-	doc, err := middlewares.GetUserFromFirebase(userId)
+	doc, err := firebase_middleware.GetUserFromFirebase(userId)
 	if err != nil {
 		ctx.String(http.StatusBadRequest, err.Error())
 	}

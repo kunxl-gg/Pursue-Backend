@@ -2,6 +2,7 @@ package types
 
 import (
 	"os"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -27,31 +28,31 @@ type FirebaseAdminUser struct {
 }
 
 type FirebaseCareerOption struct {
-	Name            *string
-	Description     *string
-	CareerPathSteps []string
-	AverageSalaries []map[string][]int
-	TopColleges     []TopCollge
-	Skills          []Skills
-	Courses         []Courses
+	Name            *string            `json:"name"`
+	Description     *string            `json:"description"`
+	CareerPathSteps []string           `json:"careerPathSteps"`
+	AverageSalaries []map[string][]int `json:"averageSalaries"`
+	TopColleges     []TopCollge        `json:"topColleges"`
+	Skills          []Skills           `json:"skills"`
+	Courses         []Courses          `json:"courses"`
 }
 
 type Courses struct {
-	Title       *string
-	Description *string
-	Image       *string
-	RedirectURl *string
+	Title       *string `json:"title"`
+	Description *string `json:"description"`
+	Image       *string `json:"image"`
+	RedirectURl *string `json:"redirectUrl"`
 }
 
 type Skills struct {
-	Title       *string
-	Description *string
+	Title       *string `json:"title"`
+	Description *string `json:"description"`
 }
 
 type TopCollge struct {
-	Name           *string
-	Image          *string
-	RedirectionUrl *string
+	Name           *string `json:"name"`
+	Image          *string `json:"image"`
+	RedirectionUrl *string `json:"redirectionUrl"`
 }
 
 // Types for Neo4j DB
@@ -66,6 +67,13 @@ type JuspayCustomer struct {
 	LastName     *string
 	MobileNumber int
 	CountryCode  int
+}
+
+// Type to Store Questions for Chatbot
+type ChatBotQuestion struct {
+	Section   *string
+	Questions *string
+	Options   []string
 }
 
 // Constants for Evnironment Variables

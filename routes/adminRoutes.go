@@ -21,7 +21,6 @@ func SetupAdminRoutes() {
 	types.AdminRoutes.GET("/users", controllers.ListOfUsersController)
 	types.AdminRoutes.GET("/paidUsers", controllers.ListOfPaidUsersController)
 	types.AdminRoutes.GET("/:userID", controllers.GetUserController)
-	//types.AdminRoutes.GET("/:userId", controllers.DeleteUserController)
 
 	// Firebase (CareerDescription) call URLs
 	types.AdminRoutes.POST("/addCareerDescription", controllers.AddCareerDescriptionToFirebaseController)
@@ -33,4 +32,10 @@ func SetupAdminRoutes() {
 
 	// URLs to deal with the Admin User
 	types.AdminRoutes.POST("/addAdminUser", nil)
+
+	// URLs to addd routes to add question to the admin dashboard
+	types.AdminRoutes.POST("/addToRepository", controllers.WriteToRepository)
+
+	// URLs to add question
+	types.AdminRoutes.POST("/addQuestion", controllers.AddQuestionController)
 }

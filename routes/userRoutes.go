@@ -8,9 +8,9 @@ import (
 // Define all the User Routes Here
 
 func SetupUserRoutes() {
-	
+
 	// Ping Route for User Routes
-	types.UserRoutes.GET("/", controllers.PingController)	
+	types.UserRoutes.GET("/", controllers.PingController)
 
 	// URL to the Payments System
 	types.UserRoutes.POST("/createCustomer", controllers.CreateCustomerController)

@@ -28,9 +28,5 @@ func WriteToRepository(ctx *gin.Context) {
 }
 
 func WriteToRepositoryWithTwo(ctx *gin.Context) {
-	// Reading the request body
-	var requestBody struct {
-		Options           []string
-		CareerSuggestions []string
-	}
+	return
 }

@@ -23,3 +23,18 @@ func AddQuestionController(ctx *gin.Context) {
 
 	ctx.String(http.StatusOK, "Added ChatBotQuestion to the Database", id)
 }
+
+func ReadQuestionController(ctx *gin.Context) {
+	// Call the middleware function
+	data, err := chatbot.ReadQuestion()
+	if err != nil {
+		log.Fatal(err)
+		ctx.String(http.StatusInternalServerError, err.Error())
+	}
+
+	// Return a response
+	ctx.JSON(
+		http.StatusOK,
+		data,
+	)
+}

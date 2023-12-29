@@ -34,8 +34,10 @@ func SetupAdminRoutes() {
 	types.AdminRoutes.POST("/addAdminUser", nil)
 
 	// URLs to addd routes to add question to the admin dashboard
-	types.AdminRoutes.POST("/addToRepository", controllers.WriteToRepository)
+	types.AdminRoutes.POST("/addToRepositoryWithTwo", controllers.WriteToRepository)
+	types.AdminRoutes.POST("/addToRepositoryWithThree", controllers.WriteToRepository)
 
 	// URLs to add question
 	types.AdminRoutes.POST("/addQuestion", controllers.AddQuestionController)
+	types.AdminRoutes.GET("/readQuestions", controllers.ReadQuestionController)
 }

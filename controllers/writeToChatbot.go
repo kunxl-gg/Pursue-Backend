@@ -16,7 +16,7 @@ func WriteToRepository(ctx *gin.Context) {
 
 	err := ctx.Bind(&requestBody)
 	if err != nil {
-		fmt.Errorf("%s", err)
+		ctx.String(http.StatusInternalServerError, err.Error())
 	}
 
 	// Call the function

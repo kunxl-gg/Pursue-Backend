@@ -19,7 +19,7 @@ func AddQuestionController(ctx *gin.Context) {
 	}
 
 	// Making a request to the middleware
-	id, err := chatbot.AddStudentQuestion(*requestBody.Section, *requestBody.Questions, requestBody.Options)
+	id, err := chatbot.AddQuestion(*requestBody.Section, *requestBody.Questions, requestBody.Options)
 
 	ctx.String(http.StatusOK, "Added ChatBotQuestion to the Database", id)
 }

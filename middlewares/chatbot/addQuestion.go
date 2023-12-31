@@ -5,7 +5,7 @@ import (
 	"google.golang.org/api/iterator"
 )
 
-func AddStudentQuestion(Section string, Question string, Option []string) (string, error) {
+func AddQuestion(Section string, Question string, Option []string) (string, error) {
 	// Initialising client and context for firebase
 	ctx, client := initialisers.InitialiseFirebase()
 	defer client.Close()

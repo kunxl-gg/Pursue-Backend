@@ -5,30 +5,13 @@ import (
 	"google.golang.org/api/iterator"
 )
 
-func AddQuestionInRepository(Questions []string, Answers []string) (string, error) {
-	// Initialising client and context
-	ctx, client := initialisers.InitialiseFirebase()
-	defer client.Close()
-
-	// Adding a new object to firebase Collection
-	doc, _, err := client.Collection("Repository").Add(ctx, map[string]interface{}{
-		"Options":      Questions,
-		"CareerChoice": Answers,
-	})
-	if err != nil {
-		return "", err
-	}
-
-	return doc.ID, nil
-}
-
-func AddUserChoicesInRepository(CareerOptions []string, Parameters []string) (string, error) {
+func AddUserChoicesInRepository(DatabaseTitle string, Parameters []string, CareerOptions []string) (string, error) {
 	// Initialising ctx and client for firebase
 	ctx, client := initialisers.InitialiseFirebase()
 	defer client.Close()
 
 	// Adding the Entry to Firebase
-	doc, _, err := client.Collection("Repository").Add(ctx, map[string]interface{}{
+	doc, _, err := client.Collection(DatabaseTitle).Add(ctx, map[string]interface{}{
 		"Parameters":    Parameters,
 		"CareerOptions": CareerOptions,
 	})
@@ -39,25 +22,28 @@ func AddUserChoicesInRepository(CareerOptions []string, Parameters []string) (st
 	return doc.ID, err
 }
 
-func ReadUserChoicesWithOneFixedVariable(CollectionName string) ([]map[string]interface{}, error) {
+func ReadRepository(DatabaseTitle string) ([]map[string]interface{}, error) {
+	// Initialising ctx and client for firebase
 	ctx, client := initialisers.InitialiseFirebase()
 	defer client.Close()
 
-	// Reading from the firebase collection
-	iter := client.Collection(CollectionName).Documents(ctx)
-	var choice []map[string]interface{}
-
+	// Making an iterator for the given Table
+	iter := client.Collection(DatabaseTitle).Documents(ctx)
+	repositoryEntries := make([]map[string]interface{}, 0)
 	for {
 		data, err := iter.Next()
+
 		if err == iterator.Done {
 			break
 		}
+
 		if err != nil {
 			return nil, err
 		}
 
-		choice = append(choice, data.Data())
+		repositoryEntries = append(repositoryEntries, data.Data())
 	}
 
-	return choice, nil
+	return repositoryEntries, nil
+
 }

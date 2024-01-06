@@ -16,7 +16,7 @@ func InitialiseFirebase() (context.Context, *firestore.Client) {
 	// Define the background Context and Configuration
 	ctx := context.Background()
 	conf := &firebase.Config{
-		ProjectID: "amritcounsellor-17082",
+		ProjectID: "pursue1",
 	}
 
 	// Getting the path of the current working directory
@@ -26,7 +26,7 @@ func InitialiseFirebase() (context.Context, *firestore.Client) {
 	}
 
 	// Configuring the secret key. If you want to change the firebase Account just change the secret.json
-	opt := option.WithCredentialsFile(curDir + "/secret-key.json")
+	opt := option.WithCredentialsFile(curDir + "/pursue-key.json")
 
 	// Initialise the Ap
 	app, err := firebase.NewApp(ctx, conf, opt)

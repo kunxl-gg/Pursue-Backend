@@ -1,12 +1,11 @@
 package controllers
 
 import (
-	"log"
-	"net/http"
-
 	"github.com/gin-gonic/gin"
 	"github.com/kunxl-gg/Amrit-Career-Counsellor.git/middlewares/chatbot"
 	"github.com/kunxl-gg/Amrit-Career-Counsellor.git/types"
+	"log"
+	"net/http"
 )
 
 func AddQuestionController(ctx *gin.Context) {

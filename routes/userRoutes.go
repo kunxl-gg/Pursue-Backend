@@ -13,14 +13,8 @@ func SetupUserRoutes() {
 	types.UserRoutes.GET("/", controllers.PingController)
 
 	// URL to the Payments System
-	types.UserRoutes.POST("/createCustomer", controllers.CreateCustomerController)
-	types.UserRoutes.GET("/getCustomer", nil)
-	types.UserRoutes.GET("/getPaymentMethods", controllers.GetPaymentMethodsController)
-	types.UserRoutes.POST("/createOrder", controllers.CreateOrderController)
-	types.UserRoutes.GET("/initiateUPIPayment")
-
-	// URL for querying information from the Graph DB
-	types.UserRoutes.POST("/queryNode", controllers.QueryNodeController)
+	types.UserRoutes.POST("/createSession", controllers.CreateSessionController)
+	types.UserRoutes.POST("/checkOrderStatus", controllers.CheckOrderStatusController)
 
 	// Calls to the Firebase DB from the Users End
 	types.UserRoutes.POST("/addUser", controllers.AddUserController)

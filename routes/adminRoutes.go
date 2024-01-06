@@ -26,14 +26,10 @@ func SetupAdminRoutes() {
 	types.AdminRoutes.POST("/addCareerDescription", controllers.AddCareerDescriptionToFirebaseController)
 	types.AdminRoutes.GET("/careerDescription", controllers.GetCareerOptionsController)
 
-	// URLs to update the Graph Database
-	types.AdminRoutes.POST("/addNode", controllers.AddNodeController)
-	types.AdminRoutes.POST("/updateNode", controllers.UpdateNodeController)
-
 	// URLs to deal with the Admin User
 	types.AdminRoutes.POST("/addAdminUser", nil)
 
-	// URLs to addd routes to add question to the admin dashboard
+	// URLs to add routes to add question to the admin dashboard
 	types.AdminRoutes.POST("/addToRepository", controllers.WriteToRepositoryController)
 	types.AdminRoutes.GET("/readRepository/:id", controllers.ReadRepositoryController)
 

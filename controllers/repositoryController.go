@@ -44,10 +44,9 @@ func WriteToRepositoryController(ctx *gin.Context) {
 
 	// Call the function
 	id, err := chatbot.AddUserChoicesInRepository(*requestBody.DatabaseTable, requestBody.Parameters, requestBody.CareerSuggestions)
-	fmt.Println(id, err)
-
+	if err != nil {
+		ctx.String(http.StatusInternalServerError, err.Error())
+	}
 	// Returning the final response Id of the object created
 	ctx.String(http.StatusOK, id)
 }
-
-

@@ -9,7 +9,7 @@ import (
 )
 
 // InitialiseMixpanel initialises the Mixpanel API Client and a background context
-func InitialiseMixpanel(event string, object string) error {
+func InitialiseMixpanel() (context.Context, *mixpanel.ApiClient) {
 
 	projectToken := os.Getenv("MIXPANEL_PROJECT_TOKEN")
 	fmt.Println(projectToken)
@@ -18,18 +18,5 @@ func InitialiseMixpanel(event string, object string) error {
 	ctx := context.Background()
 	client := mixpanel.NewApiClient(projectToken)
 
-	// Adding an event to the Mixpanel dashboard
-	err := client.Track(ctx, []*mixpanel.Event{
-		client.NewEvent(event, "", map[string]interface{}{
-			"Clicked Object": object,
-		}),
-	})
-
-	// Checking if there is an error
-	if err != nil {
-		return err
-	}
-
-	return nil
-
+	return ctx, client
 }

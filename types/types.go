@@ -1,8 +1,6 @@
 package types
 
 import (
-	"os"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -55,13 +53,9 @@ type TopCollge struct {
 	RedirectionUrl *string `json:"redirectionUrl"`
 }
 
-// Types for Neo4j DB
-type Node struct {
-	NodeTitle *string
-}
-
 // Types for the Payment Gateway
 type JuspayCustomer struct {
+	CustomerId   *string
 	EmailAddress *string
 	FirstName    *string
 	LastName     *string
@@ -75,8 +69,3 @@ type ChatBotQuestion struct {
 	Questions *string
 	Options   []string
 }
-
-// Constants for Evnironment Variables
-var MerchantID string = os.Getenv("MERCHANT_ID")
-var JuspayAPIKey string = os.Getenv("JUSPAY_API_KEY")
-var Base64encodedAPIKey = os.Getenv("Base64EncodedAPIKey")

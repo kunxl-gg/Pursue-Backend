@@ -19,8 +19,7 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.SSH_KEY }}
         script: |
-          cd /home/ec2-user/Pursue-Backend
+          cd /home/${username}/Pursue-Backend
           git pull origin main
-          docker-compose down
-          docker-compose build
-          docker-compose up -d
+          docker build -t PursueImage .
+          docker run -d -p 8080:8080 --name PursueContainer PursueImage 

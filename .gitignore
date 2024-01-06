@@ -23,6 +23,7 @@ go.work
 .env
 .idea
 secret-key.json
+pursue-key.json
 
 # Volume directories
 neo4j-data

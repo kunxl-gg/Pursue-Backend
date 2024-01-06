@@ -19,7 +19,7 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.SSH_KEY }}
         script: |
-          cd /home/${username}/Pursue-Backend
+          cd /home/ubuntu/Pursue-Backend
           git pull origin main
           docker build -t pursue-image .
           docker run -d -p 8080:8080 --name pursue-container pursue-image 

@@ -17,17 +17,17 @@ func ReadQuestion() (map[string][]interface{}, error) {
 	for {
 		// Getting the next document
 		data, err := iter.Next()
-		
+
 		// Checking if we have reached the end of the list
 		if err == iterator.Done {
 			break
 		}
-		
+
 		// Returning the error if there is any
 		if err != nil {
 			return nil, err
 		}
-		
+
 		// Checking if the section exists in the map
 		section := data.Data()["Section"].(string)
 		_, exists := questions[section]
@@ -35,7 +35,7 @@ func ReadQuestion() (map[string][]interface{}, error) {
 			questions[section] = []interface{}{
 				data.Data(),
 			}
-		}else{
+		} else {
 			questions[section] = append(questions[section], data.Data())
 		}
 	}
@@ -44,13 +44,34 @@ func ReadQuestion() (map[string][]interface{}, error) {
 	return questions, nil
 }
 
-func AddQuestion(Section string, Question string, Option []string) (string, error) {
+func AddQuestion(ID string, Section string, Question string, Option []string) (string, error) {
 	// Initialising client and context for firebase
 	ctx, client := initialisers.InitialiseFirebase()
 	defer client.Close()
 
 	// Adding Question to Firebase
-	doc, _, err := client.Collection("ChatbotQuestions").Add(ctx, map[string]interface{}{
+	_, err := client.Collection("ChatbotQuestions").Doc(ID).Set(ctx, map[string]interface{}{
+		"Section":  Section,
+		"Question": Question,
+		"Options":  Option,
+	})
+
+	if err != nil {
+		return "", err
+	}
+
+	// If everything goes fine send a success Message
+	return "Successfully Added an element to the database", nil
+}
+
+// Edit a Question
+func EditQuestion(ID string, Section string, Question string, Option []string) (string, error) {
+	// Initialising firebase
+	ctx, client := initialisers.InitialiseFirebase()
+	defer client.Close()
+
+	// Editing an element with the id provided
+	_, err := client.Collection("RepositoryQuestion").Doc(ID).Set(ctx, map[string]interface{}{
 		"Section":  Section,
 		"Question": Question,
 		"Options":  Option,
@@ -59,8 +80,20 @@ func AddQuestion(Section string, Question string, Option []string) (string, erro
 		return "", err
 	}
 
-	// If everything goes fine send a success Message
-	return doc.ID, nil
+	return "Edited Data Successfully", nil
 }
 
+func DeleteQuestion(ID string) (string, error) {
+	// Initialising firebase
+	ctx, client := initialisers.InitialiseFirebase()
+	defer client.Close()
 
+	// Deleting an element with id provided
+	_, err := client.Collection("RepositoryQuestion").Doc(ID).Delete(ctx)
+	if err != nil {
+		return "", err
+	}
+
+	// Returning the final Success Message
+	return "Deleted Item Successfully", nil
+}

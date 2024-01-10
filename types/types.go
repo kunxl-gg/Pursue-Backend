@@ -65,6 +65,7 @@ type JuspayCustomer struct {
 
 // Type to Store Questions for Chatbot
 type ChatBotQuestion struct {
+	ID        *string
 	Section   *string
 	Questions *string
 	Options   []string

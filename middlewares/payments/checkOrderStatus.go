@@ -2,21 +2,23 @@ package middlewares
 
 import (
 	"fmt"
+	"io"
 	"net/http"
 	"os"
-	"time"
 )
 
-func CreateOrder(orderId string) {
+// CheckOrderStatus: Middleware Method to Check Order Status
+func CheckOrderStatus(orderId string) (string, error) {
 	// Creating an HTTP client
 	client := http.Client{}
 
-	orderUrl := os.Getenv("JUSPAY_SERVER_URL") + "/order/" + orderId
+	orderUrl := os.Getenv("JUSPAY_SERVER_URL") + "/orders/" + orderId
 	merchantId := os.Getenv("MERCHANT_ID")
-	currentDate := time.Now().Format("2024-01-30")
-
+	currentDate := "2024-01-07"
+	juspayAPIKey := os.Getenv("JUSPAY_API_KEY")
+	fmt.Println(orderUrl, merchantId, currentDate, juspayAPIKey)
 	// Setting headers to the request
-	req, err := http.NewRequest("POST", orderUrl, nil)
+	req, err := http.NewRequest("GET", orderUrl, nil)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -27,13 +29,19 @@ func CreateOrder(orderId string) {
 	req.Header.Set("x-merchantid", merchantId)
 
 	// Setting up Basic Authentication
-	req.SetBasicAuth("", "")
+	req.SetBasicAuth(juspayAPIKey, "")
 
 	// Making the request
 	resp, err := client.Do(req)
 	if err != nil {
-		fmt.Println(err)
+		return "", err
+	}
+	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return "", err
 	}
 
-	fmt.Println(resp)
+	return string(body), nil
 }

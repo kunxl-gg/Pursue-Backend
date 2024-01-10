@@ -1,11 +1,13 @@
 package controllers
 
 import (
+	"fmt"
+	"log"
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/kunxl-gg/Amrit-Career-Counsellor.git/middlewares/chatbot"
 	"github.com/kunxl-gg/Amrit-Career-Counsellor.git/types"
-	"log"
-	"net/http"
 )
 
 func AddQuestionController(ctx *gin.Context) {
@@ -18,7 +20,7 @@ func AddQuestionController(ctx *gin.Context) {
 	}
 
 	// Making a request to the middleware
-	id, err := chatbot.AddQuestion(*requestBody.Section, *requestBody.Questions, requestBody.Options)
+	id, err := chatbot.AddQuestion(*requestBody.ID, *requestBody.Section, *requestBody.Questions, requestBody.Options)
 
 	ctx.String(http.StatusOK, "Added ChatBotQuestion to the Database", id)
 }
@@ -36,4 +38,38 @@ func ReadQuestionController(ctx *gin.Context) {
 		http.StatusOK,
 		data,
 	)
+}
+
+// Method to Edit Question
+func EditQuestionController(ctx *gin.Context) {
+	// Binding the requestBody to the variable
+	var requestBody types.ChatBotQuestion
+	ctx.Bind(&requestBody)
+	fmt.Println(*requestBody.ID)
+
+	// Pass the requestBody into some sort of middleware
+	resp, err := chatbot.EditQuestion(*requestBody.ID, *requestBody.Section, *requestBody.Questions, requestBody.Options)
+	if err != nil {
+		ctx.String(http.StatusInternalServerError, err.Error())
+	}
+
+	// Return a Response
+	ctx.String(http.StatusOK, resp)
+}
+
+// Method to Delete Question
+func DeleteQuestionController(ctx *gin.Context) {
+	// Binding the requestBody to the variable
+	var requestBody types.ChatBotQuestion
+	ctx.Bind(&requestBody)
+	fmt.Println(requestBody.Section)
+
+	// Pass the requestBody into some sort of middleware
+	resp, err := chatbot.DeleteQuestion(*requestBody.ID)
+	if err != nil {
+		ctx.String(http.StatusInternalServerError, err.Error())
+	}
+	// Return a Response
+
+	ctx.String(http.StatusOK, resp)
 }

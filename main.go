@@ -10,8 +10,8 @@ import (
 
 // Initialising the necessary configurations
 func init() {
-	initialisers.InitialiseFirebase()
 	initialisers.InitialiseEnvVariables()
+	initialisers.InitialiseFirebase()
 }
 
 func main() {

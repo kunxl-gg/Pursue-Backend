@@ -31,6 +31,7 @@ func ReadRepositoryController(ctx *gin.Context) {
 func WriteToRepositoryController(ctx *gin.Context) {
 	// Reading the request body
 	var requestBody struct {
+		ID                *string
 		DatabaseTable     *string
 		Parameters        []string
 		CareerSuggestions []string
@@ -43,10 +44,53 @@ func WriteToRepositoryController(ctx *gin.Context) {
 	}
 
 	// Call the function
-	id, err := chatbot.AddUserChoicesInRepository(*requestBody.DatabaseTable, requestBody.Parameters, requestBody.CareerSuggestions)
+	id, err := chatbot.AddUserChoicesInRepository(*requestBody.ID, *requestBody.DatabaseTable, requestBody.Parameters, requestBody.CareerSuggestions)
 	if err != nil {
 		ctx.String(http.StatusInternalServerError, err.Error())
 	}
 	// Returning the final response Id of the object created
 	ctx.String(http.StatusOK, id)
+}
+
+// EditToRepository - Controller to edit Repository Options
+func EditRepositoryController(ctx *gin.Context) {
+	var requestBody struct {
+		ID                *string
+		DatabaseTable     *string
+		Parameters        []string
+		CareerSuggestions []string
+	}
+	err := ctx.Bind(&requestBody)
+	if err != nil {
+		ctx.String(http.StatusInternalServerError, "Failed to Fetch RequestBody"+err.Error())
+	}
+
+	// Passing these parameters in the middleware
+	resp, err := chatbot.AddUserChoicesInRepository(*requestBody.ID, *requestBody.DatabaseTable, requestBody.Parameters, requestBody.CareerSuggestions)
+	if err != nil {
+		ctx.String(http.StatusInternalServerError, err.Error())
+	}
+
+	ctx.String(http.StatusOK, resp)
+}
+
+// DeleteInRepository
+func DeleteRepositoryController(ctx *gin.Context) {
+	// Fetching the request Body
+	var requestBody struct {
+		ID            *string
+		DatabaseTable *string
+	}
+	err := ctx.Bind(&requestBody)
+	if err != nil {
+		ctx.String(http.StatusInternalServerError, err.Error())
+	}
+
+	// Passing the parameters to the middleware
+	resp, err := chatbot.DeleteRepository(*requestBody.ID, *requestBody.DatabaseTable)
+	if err != nil {
+		ctx.String(http.StatusInternalServerError, err.Error())
+	}
+
+	ctx.String(http.StatusOK, resp)
 }

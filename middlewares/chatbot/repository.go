@@ -33,13 +33,13 @@ func ReadRepository(DatabaseTitle string) ([]map[string]interface{}, error) {
 
 }
 
-func AddUserChoicesInRepository(DatabaseTitle string, Parameters []string, CareerOptions []string) (string, error) {
+func AddUserChoicesInRepository(ID string, DatabaseTitle string, Parameters []string, CareerOptions []string) (string, error) {
 	// Initialising ctx and client for firebase
 	ctx, client := initialisers.InitialiseFirebase()
 	defer client.Close()
 
-	// Adding the Entry to Firebase
-	doc, _, err := client.Collection(DatabaseTitle).Add(ctx, map[string]interface{}{
+	// Adding Entry to Firebase
+	_, err := client.Collection(DatabaseTitle).Doc(ID).Set(ctx, map[string]interface{}{
 		"Parameters":    Parameters,
 		"CareerOptions": CareerOptions,
 	})
@@ -47,5 +47,19 @@ func AddUserChoicesInRepository(DatabaseTitle string, Parameters []string, Caree
 		return "", err
 	}
 
-	return doc.ID, err
+	return "Added an Entry to Repository", err
+}
+
+func DeleteRepository(ID string, DatabaseTable string) (string, error) {
+	// Initialising firebase
+	ctx, client := initialisers.InitialiseFirebase()
+	defer client.Close()
+
+	// Deleting the entry from firebase
+	_, err := client.Collection(DatabaseTable).Doc(ID).Delete(ctx)
+	if err != nil {
+		return "", nil
+	}
+
+	return "Deleted Item From Repository Successfully", nil
 }

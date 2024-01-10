@@ -94,3 +94,27 @@ func DeleteRepositoryController(ctx *gin.Context) {
 
 	ctx.String(http.StatusOK, resp)
 }
+
+// RepositoryController - Controller to fetch the final list of career Options
+func FetchFinalCareerOptionsController(ctx *gin.Context) {
+	requestParam := ctx.Param("id")
+	fmt.Println(requestParam)
+
+	// Fetching the request body
+	var requestBody struct {
+		DatabaseTable *string
+	}
+	ctx.Bind(&requestBody)
+
+	// Making a call to the backend function
+	data, err := chatbot.FetchFinalCareerOptions(requestParam, *requestBody.DatabaseTable)
+	if err != nil {
+		ctx.String(http.StatusInternalServerError, err.Error())
+	}
+
+	// Returning the final response as a string
+	ctx.JSON(	
+		http.StatusOK,
+		data,
+	)
+}

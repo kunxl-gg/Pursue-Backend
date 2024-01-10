@@ -63,3 +63,18 @@ func DeleteRepository(ID string, DatabaseTable string) (string, error) {
 
 	return "Deleted Item From Repository Successfully", nil
 }
+
+func FetchFinalCareerOptions(requestParam string, DatabaseTable string) (map[string]interface{}, error){
+	// Initialising firebase
+	ctx, client := initialisers.InitialiseFirebase()
+	defer client.Close()
+
+	// Fetching the request object
+	requestObject, err := client.Collection(DatabaseTable).Doc(requestParam).Get(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	// Reading the parameters from the request object
+	return requestObject.Data(), err
+}

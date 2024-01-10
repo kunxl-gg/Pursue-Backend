@@ -3,11 +3,13 @@ package controllers
 // This File has the Controllers for all the Read Operations to Firebase
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
 	firebase_middleware "github.com/kunxl-gg/Amrit-Career-Counsellor.git/middlewares/firebase"
+	"github.com/kunxl-gg/Amrit-Career-Counsellor.git/types"
 )
 
 // CountUserController Function to fetch Total User Count
@@ -104,6 +106,35 @@ func GetCareerOptionController(ctx *gin.Context) {
 	)
 }
 
-// GetCareerOptionByStageController - Method to fetch the Career Option by Stage
+// EditCareerOptionController - Method to Edit a Career Option
+func EditCareerDescriptionController(ctx *gin.Context) {
 
-// 
+	var requestBody types.FirebaseCareerOption
+	var requestParam string = ctx.Param("id")
+
+	// Editing the Career Option
+	resp, err := firebase_middleware.EditCareerDescription(requestParam, requestBody)
+	if err != nil {
+		ctx.String(http.StatusInternalServerError, err.Error())
+	}
+
+	// Returning the Response
+	ctx.String(http.StatusOK, resp)
+}
+
+// DeleteCareerOptionController - Method to Delete a Career Option
+func DeleteCareerDescriptionController(ctx *gin.Context) {
+	
+	// Fetching the request parameter
+	var requestParam string = ctx.Param("id")
+	fmt.Println(requestParam)
+
+	// Deleting the Career Option
+	resp, err := firebase_middleware.DeleteCareerDescription(requestParam)
+	if err != nil {
+		ctx.String(http.StatusInternalServerError, err.Error())
+	}
+
+	// Returning the Response
+	ctx.String(http.StatusOK, resp)
+}

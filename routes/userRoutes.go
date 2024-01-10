@@ -22,6 +22,9 @@ func SetupUserRoutes() {
 	types.UserRoutes.POST("/updateSelectedOption/:userId", controllers.UpdateOptionsController)
 	types.UserRoutes.POST("/getCareerOption", controllers.GetCareerOptionController)
 
+	// Final call to fetch the list of career Optoins. Make sure the name of the career Description is the same as that the repository.
+	types.UserRoutes.POST("/getFinalCareerOptions/:id", controllers.FetchFinalCareerOptionsController)
+
 	// Calls to Mixpanel
 	types.UserRoutes.POST("/addEvent", controllers.TrackMixpanelController)
 }

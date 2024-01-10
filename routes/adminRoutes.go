@@ -25,6 +25,8 @@ func SetupAdminRoutes() {
 	// Firebase (CareerDescription) call URLs
 	types.AdminRoutes.POST("/addCareerDescription", controllers.AddCareerDescriptionToFirebaseController)
 	types.AdminRoutes.GET("/careerDescription", controllers.GetCareerOptionsController)
+	types.AdminRoutes.POST("/editCareerDescription", controllers.EditCareerDescriptionController)
+	types.AdminRoutes.POST("/deleteCareerDescription/:id", controllers.DeleteCareerDescriptionController)
 
 	// URLs to deal with the Admin User
 	types.AdminRoutes.POST("/addAdminUser", nil)

@@ -1,6 +1,8 @@
 package chatbot
 
 import (
+	"fmt"
+
 	"github.com/kunxl-gg/Amrit-Career-Counsellor.git/initialisers"
 	"google.golang.org/api/iterator"
 )
@@ -28,15 +30,18 @@ func ReadQuestion() (map[string][]interface{}, error) {
 			return nil, err
 		}
 
+		questionData := data.Data()
+		questionData["ID"] = data.Ref.ID
+
 		// Checking if the section exists in the map
 		section := data.Data()["Section"].(string)
 		_, exists := questions[section]
 		if !exists {
 			questions[section] = []interface{}{
-				data.Data(),
+				questionData,
 			}
 		} else {
-			questions[section] = append(questions[section], data.Data())
+			questions[section] = append(questions[section], questionData)
 		}
 	}
 
@@ -61,7 +66,7 @@ func AddQuestion(ID string, Section string, Question string, Option []string) (s
 	}
 
 	// If everything goes fine send a success Message
-	return "Successfully Added an element to the database", nil
+	return ID, nil
 }
 
 // Edit a Question
@@ -88,8 +93,14 @@ func DeleteQuestion(ID string) (string, error) {
 	ctx, client := initialisers.InitialiseFirebase()
 	defer client.Close()
 
+	// Checking if the value already exists or not
+	doc, err := client.Collection("RepositoryQuestion").Doc(ID).Get(ctx)
+	if !doc.Exists() {
+		return "", fmt.Errorf("The element doesn't exist")
+	}
+
 	// Deleting an element with id provided
-	_, err := client.Collection("RepositoryQuestion").Doc(ID).Delete(ctx)
+	_, err = client.Collection("RepositoryQuestion").Doc(ID).Delete(ctx)
 	if err != nil {
 		return "", err
 	}

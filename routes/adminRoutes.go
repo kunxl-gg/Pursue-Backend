@@ -41,5 +41,5 @@ func SetupAdminRoutes() {
 	types.AdminRoutes.POST("/addQuestion", controllers.AddQuestionController)
 	types.AdminRoutes.GET("/readQuestions", controllers.ReadQuestionController)
 	types.AdminRoutes.POST("/editQuestion", controllers.EditQuestionController)
-	types.AdminRoutes.POST("/deleteQuestion", controllers.DeleteQuestionController)
+	types.AdminRoutes.POST("/deleteQuestion/:id", controllers.DeleteQuestionController)
 }

@@ -21,7 +21,7 @@ jobs:
         script: |
           cd /home/ubuntu/Pursue-Backend
           git pull origin main
-          docker stop pursuse-container
+          docker stop pursue-container
           docker rm pursue-container
           docker build -t pursue-image .
           docker run -d -p 8080:8080 --name pursue-container pursue-image 

@@ -48,6 +48,7 @@ func WriteToRepositoryController(ctx *gin.Context) {
 	if err != nil {
 		ctx.String(http.StatusInternalServerError, err.Error())
 	}
+
 	// Returning the final response Id of the object created
 	ctx.String(http.StatusOK, id)
 }
@@ -113,7 +114,7 @@ func FetchFinalCareerOptionsController(ctx *gin.Context) {
 	}
 
 	// Returning the final response as a string
-	ctx.JSON(	
+	ctx.JSON(
 		http.StatusOK,
 		data,
 	)

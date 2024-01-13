@@ -14,8 +14,16 @@ func ReadRepository(DatabaseTitle string) ([]map[string]interface{}, error) {
 	// Making an iterator for the given Table
 	iter := client.Collection(DatabaseTitle).Documents(ctx)
 	repositoryEntries := make([]map[string]interface{}, 0)
+
 	for {
 		data, err := iter.Next()
+		repositoryData := make(map[string]interface{})
+		originalRepositoryData := data.Data()
+
+		for key, values := range originalRepositoryData {
+			repositoryData[key] = values
+		}
+		repositoryData["ID"] = data.Ref.ID
 
 		if err == iterator.Done {
 			break
@@ -25,7 +33,7 @@ func ReadRepository(DatabaseTitle string) ([]map[string]interface{}, error) {
 			return nil, err
 		}
 
-		repositoryEntries = append(repositoryEntries, data.Data())
+		repositoryEntries = append(repositoryEntries, repositoryData)
 	}
 
 	// Returning all the repository entries
@@ -64,7 +72,7 @@ func DeleteRepository(ID string, DatabaseTable string) (string, error) {
 	return "Deleted Item From Repository Successfully", nil
 }
 
-func FetchFinalCareerOptions(requestParam string, DatabaseTable string) (map[string]interface{}, error){
+func FetchFinalCareerOptions(requestParam string, DatabaseTable string) (map[string]interface{}, error) {
 	// Initialising firebase
 	ctx, client := initialisers.InitialiseFirebase()
 	defer client.Close()

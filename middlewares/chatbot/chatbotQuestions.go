@@ -3,6 +3,7 @@ package chatbot
 import (
 	"fmt"
 
+	"cloud.google.com/go/firestore"
 	"github.com/kunxl-gg/Amrit-Career-Counsellor.git/initialisers"
 	"google.golang.org/api/iterator"
 )
@@ -76,10 +77,19 @@ func EditQuestion(ID string, Section string, Question string, Option []string) (
 	defer client.Close()
 
 	// Editing an element with the id provided
-	_, err := client.Collection("RepositoryQuestion").Doc(ID).Set(ctx, map[string]interface{}{
-		"Section":  Section,
-		"Question": Question,
-		"Options":  Option,
+	_, err := client.Collection("ChatbotQuestions").Doc(ID).Update(ctx, []firestore.Update{
+		{
+			Path:  "Question",
+			Value: Question,
+		},
+		{
+			Path:  "Options",
+			Value: Option,
+		},
+		{
+			Path:  "Section",
+			Value: Section,
+		},
 	})
 	if err != nil {
 		return "", err
@@ -94,13 +104,13 @@ func DeleteQuestion(ID string) (string, error) {
 	defer client.Close()
 
 	// Checking if the value already exists or not
-	doc, err := client.Collection("RepositoryQuestion").Doc(ID).Get(ctx)
+	doc, err := client.Collection("ChatbotQuestions").Doc(ID).Get(ctx)
 	if !doc.Exists() {
 		return "", fmt.Errorf("The element doesn't exist")
 	}
 
 	// Deleting an element with id provided
-	_, err = client.Collection("RepositoryQuestion").Doc(ID).Delete(ctx)
+	_, err = client.Collection("ChatbotQuestions").Doc(ID).Delete(ctx)
 	if err != nil {
 		return "", err
 	}

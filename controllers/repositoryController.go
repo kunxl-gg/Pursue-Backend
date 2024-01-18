@@ -67,7 +67,7 @@ func EditRepositoryController(ctx *gin.Context) {
 	}
 
 	// Passing these parameters in the middleware
-	resp, err := chatbot.AddUserChoicesInRepository(*requestBody.ID, *requestBody.DatabaseTable, requestBody.Parameters, requestBody.CareerSuggestions)
+	resp, err := chatbot.EditRepository(*requestBody.ID, *requestBody.DatabaseTable, requestBody.Parameters, requestBody.CareerSuggestions)
 	if err != nil {
 		ctx.String(http.StatusInternalServerError, err.Error())
 	}

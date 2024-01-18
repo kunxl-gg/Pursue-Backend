@@ -1,6 +1,7 @@
 package chatbot
 
 import (
+	"cloud.google.com/go/firestore"
 	"github.com/kunxl-gg/Amrit-Career-Counsellor.git/initialisers"
 	"google.golang.org/api/iterator"
 )
@@ -17,13 +18,6 @@ func ReadRepository(DatabaseTitle string) ([]map[string]interface{}, error) {
 
 	for {
 		data, err := iter.Next()
-		repositoryData := make(map[string]interface{})
-		originalRepositoryData := data.Data()
-
-		for key, values := range originalRepositoryData {
-			repositoryData[key] = values
-		}
-		repositoryData["ID"] = data.Ref.ID
 
 		if err == iterator.Done {
 			break
@@ -32,6 +26,14 @@ func ReadRepository(DatabaseTitle string) ([]map[string]interface{}, error) {
 		if err != nil {
 			return nil, err
 		}
+
+		repositoryData := make(map[string]interface{})
+		originalRepositoryData := data.Data()
+
+		for key, values := range originalRepositoryData {
+			repositoryData[key] = values
+		}
+		repositoryData["ID"] = data.Ref.ID
 
 		repositoryEntries = append(repositoryEntries, repositoryData)
 	}
@@ -85,4 +87,27 @@ func FetchFinalCareerOptions(requestParam string, DatabaseTable string) (map[str
 
 	// Reading the parameters from the request object
 	return requestObject.Data(), err
+}
+
+func EditRepository(ID string, DatabaseTable string, Parametes []string, CareerOptions []string) (string, error) {
+
+	// Initialising Firebase
+	ctx, client := initialisers.InitialiseFirebase()
+	defer client.Close()
+
+	_, err := client.Collection(DatabaseTable).Doc(ID).Update(ctx, []firestore.Update{
+		{
+			Path:  "Parameters",
+			Value: Parametes,
+		},
+		{
+			Path:  "CareerOptions",
+			Value: CareerOptions,
+		},
+	})
+	if err != nil {
+		return "", err
+	}
+
+	return "Successfully Edited Repository Table", nil
 }
